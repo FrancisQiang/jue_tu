@@ -30,7 +30,10 @@ build/
 ### VS Code ###
 .vscode/
 
-### MVNW
+### other
 mvnw/
 mvnw.*
+mvnw
 jue_tu.iml
+.mvn/
+log/
