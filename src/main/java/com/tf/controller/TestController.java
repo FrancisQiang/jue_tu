@@ -31,14 +31,27 @@ public class TestController {
         throw new GlobalException("错误", 1);
     }
 
+    /**
+     * description: 模拟登录获取JWT令牌
+     * @return:
+     * @author: Wei Yuyang
+     * @time: 2020.01.22
+     */
     @PostMapping("/login")
     public BaseResult<String> login(String id){
+        //真实情况：输入账号密码进行校验，成功返回id再获取JWT令牌
         String sign = jwtUtil.sign(id);
         BaseResult<String> baseResult = new BaseResult<>(200,"success");
         baseResult.setData(sign);
         return baseResult;
     }
 
+    /**
+     * description: 权限测试
+     * @return: 
+     * @author: Wei Yuyang
+     * @time: 2020.01.22
+     */
     @RequiresPermissions("testpermission")
     @GetMapping("/permission")
     public BaseResult<String> permission(){
