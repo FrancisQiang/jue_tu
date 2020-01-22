@@ -237,7 +237,7 @@
         select role_id as "rp.role_id"
             from role_user
              left join `user` as u on role_user.user_id = u.user_id
-    where u.user_id = #{roleId,jdbcType=Integer}
+    where u.user_id = #{userId,jdbcType=INTEGER}
 )
   </select>
 </mapper>
