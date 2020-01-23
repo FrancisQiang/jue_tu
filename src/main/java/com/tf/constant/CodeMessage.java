@@ -1,33 +1,32 @@
 package com.tf.constant;
 
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author lgq
  * @date 2020/1/23
  */
 @Getter
-public enum CodeMessage {
+@Setter
+public class CodeMessage {
 
-    /**
-     * 响应码和对应信息
-     */
-    SUCCESS(0, "成功"),
-    ERROR_INPUT(1, "输入的数据有误"),
-    GENERATE_CAPTCHA_FAIL(2, "生成验证码失败"),
-    CLOSE_IMAGE_OUTPUT_STREAM_FAIL(3, "关闭图像输出流失败"),
-    USER_ACCOUNT_LOCKED(4,"该账号已被冻结"),
-    INTERNAL_SERVER_ERROR(500,"服务器内部错误"),
-    USERNAME_PASSWORD_ERROR(1001, "用户名或密码错误"),
-    INCORRECT_VERIFICATION_CODE(1002, "验证码错误"),
-    BLOG_ADD_ERROR(1001, "添加博客失败"),
-    SAME_USER_ACCOUNT(1003,"该用户名已经被使用"),
-    ERROR_VERIFICATION(1004,"验证码不正确");
+    public static final Integer PARAM_ERROR = 1;
+    public static final CodeMessage SUCCESS = new CodeMessage(0, "成功");
+    public static final CodeMessage GENERATE_CAPTCHA_FAIL = new CodeMessage(2, "生成验证码失败");
+    public static final CodeMessage CLOSE_IMAGE_OUTPUT_STREAM_FAIL = new CodeMessage(0, "成功");
+    public static final CodeMessage USER_ACCOUNT_LOCKED = new CodeMessage(4,"该账号已被冻结");
+    public static final CodeMessage INTERNAL_SERVER_ERROR = new CodeMessage(500, "服务器内部错误");
+    public static final CodeMessage USERNAME_PASSWORD_ERROR = new CodeMessage(1001, "用户名或密码错误");
+    public static final CodeMessage INCORRECT_VERIFICATION_CODE = new CodeMessage(1002, "验证码错误");
+    public static final CodeMessage SAME_USER_ACCOUNT = new CodeMessage(1003, "该用户名已经被使用");
+    public static final CodeMessage ERROR_VERIFICATION = new CodeMessage(1004, "验证码不正确");
+    public static final CodeMessage BLOG_ADD_ERROR = new CodeMessage(2001, "添加博客失败");
 
     private Integer code;
     private String message;
 
-     CodeMessage(Integer code, String message) {
+    public CodeMessage(Integer code, String message) {
         this.code = code;
         this.message = message;
     }
