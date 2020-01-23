@@ -6,8 +6,8 @@ import com.tf.dto.CaptchaDTO;
 import com.tf.dto.LoginDTO;
 import com.tf.exception.GlobalException;
 import com.tf.service.UserService;
-import com.tf.vo.BaseResult;
 import com.tf.vo.LoginVO;
+import com.tf.vo.RegisterVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,5 +49,23 @@ public class LoginController {
     @GetMapping("captcha")
     public CaptchaDTO captcha() throws GlobalException {
         return userService.generateVerificationCode();
+    }
+
+    /**
+     * description: 用户注册
+     * @return:
+     * @author: Wei Yuyang
+     * @time: 2020.01.23
+     */
+    @PostMapping("register")
+    public String register(@RequestBody @Valid RegisterVO registerInfo,BindingResult results) throws GlobalException {
+        if(results.hasErrors()){
+            throw new GlobalException(CodeMessage.ERROR_INPUT);
+        }
+        boolean register = userService.register(registerInfo);
+        if(register){
+            return "注册成功";
+        }
+        return "注册失败";
     }
 }
