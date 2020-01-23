@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Integer login(LoginVO loginInfo) throws GlobalException {
         UserExample userExample = new UserExample();
-        userExample.createCriteria().andUserAccountEqualTo(loginInfo.getUsername()).andUserPasswordEqualTo(loginInfo.getPassword());
+        userExample.createCriteria().andUserAccountEqualTo(loginInfo.getUserAccount()).andUserPasswordEqualTo(loginInfo.getPassword());
         List<User> users = userMapper.selectByExample(userExample);
         if(users.size() == 0){
             throw new GlobalException(CodeMessage.USERNAME_PASSWORD_ERROR);

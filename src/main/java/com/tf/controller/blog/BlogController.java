@@ -1,4 +1,4 @@
-package com.tf.controller;
+package com.tf.controller.blog;
 
 import com.louislivi.fastdep.shirojwt.jwt.JwtUtil;
 import com.tf.exception.GlobalException;
