@@ -42,6 +42,7 @@ public class TestController {
     @RequiresPermissions("testpermission")
     @GetMapping("/permission")
     public BaseResult<String> permission(){
+        String userId = jwtUtil.getUserId();
         return new BaseResult<>(200,"该用户拥有测试权限");
     }
 
