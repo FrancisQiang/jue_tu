@@ -7,11 +7,13 @@ import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.stereotype.Service;
 
 /**
  * @author lgq
  * @date 2020/1/22
  */
+@Service
 public class RedisServiceImpl implements RedisService {
 
 

@@ -1,13 +1,13 @@
 spring:
   datasource:
     username: root
-    password: lin2487049041
+    password: 999Iamtinydust
     url: jdbc:mysql://127.0.0.1:3306/jue_tu?characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-#  redis:
-#    port: 6379
-#    host: 127.0.0.1
+  redis:
+    port: 6379
+    host: 127.0.0.1
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mapper/*.xml
@@ -27,6 +27,9 @@ fastdep:
       front:
         path: /test/login
         role: anon # anon为无需校验
+      login:
+        path: /sign_in
+        role: anon
     secret: "6Dx8SIuaHXJYnpsG18SSpjPs50lZcT52" # jwt秘钥
 #    expireTime: 7200000 # token有效期
 #    prefix: "Bearer "  # token校验时的前缀
