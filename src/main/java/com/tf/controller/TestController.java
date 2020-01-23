@@ -5,10 +5,7 @@ import com.tf.exception.GlobalException;
 import com.tf.vo.BaseResult;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author lgq
@@ -38,7 +35,7 @@ public class TestController {
      * @time: 2020.01.22
      */
     @PostMapping("/login")
-    public BaseResult<String> login(String id){
+    public BaseResult<String> login(@RequestBody String id){
         //真实情况：输入账号密码进行校验，成功返回id再获取JWT令牌
         String sign = jwtUtil.sign(id);
         BaseResult<String> baseResult = new BaseResult<>(200,"success");
