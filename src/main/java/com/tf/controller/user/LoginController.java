@@ -66,6 +66,8 @@ public class LoginController {
         if(register){
             return "注册成功";
         }
-        return "注册失败";
+        else {
+            throw new GlobalException(CodeMessage.INTERNAL_SERVER_ERROR);
+        }
     }
 }
