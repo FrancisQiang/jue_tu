@@ -1,7 +1,7 @@
 package com.tf.advice;
 
 import com.tf.annotation.IgnoreResponseAdvice;
-import com.tf.constant.Code;
+import com.tf.constant.CodeMessage;
 import com.tf.vo.BaseResult;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -33,7 +33,7 @@ public class BaseResultAdvice implements ResponseBodyAdvice<Object> {
                                   Class<? extends HttpMessageConverter<?>> aClass,
                                   ServerHttpRequest serverHttpRequest,
                                   ServerHttpResponse serverHttpResponse) {
-        BaseResult<Object> response = new BaseResult<>(Code.SUCCESS_CODE, "");
+        BaseResult<Object> response = new BaseResult<>(CodeMessage.SUCCESS.getCode(), CodeMessage.SUCCESS.getMessage());
         if (null == o) {
             return response;
         }

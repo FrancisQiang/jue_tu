@@ -18,7 +18,7 @@ public class GlobalExceptionAdvice {
     public BaseResult<String> handlerAdException(HttpServletRequest request,
                                                  GlobalException ex) {
         BaseResult<String> response = new BaseResult<>();
-        response.setCode(ex.getCode());
+        response.setCode(ex.getCodeMessage().getCode());
         response.setMsg(ex.getMessage());
         return response;
     }

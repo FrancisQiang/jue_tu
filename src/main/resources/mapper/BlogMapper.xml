@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tf.dao.BlogMapper">
+  <resultMap id="BaseResultMap" type="com.tf.entity.Blog">
+    <id column="blog_id" jdbcType="INTEGER" property="blogId" />
+    <result column="blog_title" jdbcType="VARCHAR" property="blogTitle" />
+    <result column="blog_summary" jdbcType="VARCHAR" property="blogSummary" />
+    <result column="blog_create_time" jdbcType="TIMESTAMP" property="blogCreateTime" />
+    <result column="blog_update_time" jdbcType="TIMESTAMP" property="blogUpdateTime" />
+    <result column="blog_thumb" jdbcType="INTEGER" property="blogThumb" />
+    <result column="blog_view" jdbcType="INTEGER" property="blogView" />
+    <result column="blog_reply" jdbcType="INTEGER" property="blogReply" />
+    <result column="blog_tag" jdbcType="VARCHAR" property="blogTag" />
+    <result column="blog_category_id" jdbcType="INTEGER" property="blogCategoryId" />
+    <result column="blog_cover" jdbcType="VARCHAR" property="blogCover" />
+    <result column="blog_recommend" jdbcType="DOUBLE" property="blogRecommend" />
+    <result column="blog_author_id" jdbcType="INTEGER" property="blogAuthorId" />
+    <result column="blog_author_avatar" jdbcType="VARCHAR" property="blogAuthorAvatar" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.tf.entity.Blog">
+    <result column="blog_content" jdbcType="LONGVARCHAR" property="blogContent" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    blog_id, blog_title, blog_summary, blog_create_time, blog_update_time, blog_thumb, 
+    blog_view, blog_reply, blog_tag, blog_category_id, blog_cover, blog_recommend, blog_author_id, 
+    blog_author_avatar
+  </sql>
+  <sql id="Blob_Column_List">
+    blog_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.tf.entity.BlogExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.tf.entity.BlogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from blog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog
+    where blog_id = #{blogId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from blog
+    where blog_id = #{blogId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tf.entity.BlogExample">
+    delete from blog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tf.entity.Blog">
+    insert into blog (blog_id, blog_title, blog_summary, 
+      blog_create_time, blog_update_time, blog_thumb, 
+      blog_view, blog_reply, blog_tag, 
+      blog_category_id, blog_cover, blog_recommend, 
+      blog_author_id, blog_author_avatar, blog_content
+      )
+    values (#{blogId,jdbcType=INTEGER}, #{blogTitle,jdbcType=VARCHAR}, #{blogSummary,jdbcType=VARCHAR}, 
+      #{blogCreateTime,jdbcType=TIMESTAMP}, #{blogUpdateTime,jdbcType=TIMESTAMP}, #{blogThumb,jdbcType=INTEGER}, 
+      #{blogView,jdbcType=INTEGER}, #{blogReply,jdbcType=INTEGER}, #{blogTag,jdbcType=VARCHAR}, 
+      #{blogCategoryId,jdbcType=INTEGER}, #{blogCover,jdbcType=VARCHAR}, #{blogRecommend,jdbcType=DOUBLE}, 
+      #{blogAuthorId,jdbcType=INTEGER}, #{blogAuthorAvatar,jdbcType=VARCHAR}, #{blogContent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tf.entity.Blog">
+    insert into blog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="blogId != null">
+        blog_id,
+      </if>
+      <if test="blogTitle != null">
+        blog_title,
+      </if>
+      <if test="blogSummary != null">
+        blog_summary,
+      </if>
+      <if test="blogCreateTime != null">
+        blog_create_time,
+      </if>
+      <if test="blogUpdateTime != null">
+        blog_update_time,
+      </if>
+      <if test="blogThumb != null">
+        blog_thumb,
+      </if>
+      <if test="blogView != null">
+        blog_view,
+      </if>
+      <if test="blogReply != null">
+        blog_reply,
+      </if>
+      <if test="blogTag != null">
+        blog_tag,
+      </if>
+      <if test="blogCategoryId != null">
+        blog_category_id,
+      </if>
+      <if test="blogCover != null">
+        blog_cover,
+      </if>
+      <if test="blogRecommend != null">
+        blog_recommend,
+      </if>
+      <if test="blogAuthorId != null">
+        blog_author_id,
+      </if>
+      <if test="blogAuthorAvatar != null">
+        blog_author_avatar,
+      </if>
+      <if test="blogContent != null">
+        blog_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="blogId != null">
+        #{blogId,jdbcType=INTEGER},
+      </if>
+      <if test="blogTitle != null">
+        #{blogTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="blogSummary != null">
+        #{blogSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="blogCreateTime != null">
+        #{blogCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="blogUpdateTime != null">
+        #{blogUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="blogThumb != null">
+        #{blogThumb,jdbcType=INTEGER},
+      </if>
+      <if test="blogView != null">
+        #{blogView,jdbcType=INTEGER},
+      </if>
+      <if test="blogReply != null">
+        #{blogReply,jdbcType=INTEGER},
+      </if>
+      <if test="blogTag != null">
+        #{blogTag,jdbcType=VARCHAR},
+      </if>
+      <if test="blogCategoryId != null">
+        #{blogCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="blogCover != null">
+        #{blogCover,jdbcType=VARCHAR},
+      </if>
+      <if test="blogRecommend != null">
+        #{blogRecommend,jdbcType=DOUBLE},
+      </if>
+      <if test="blogAuthorId != null">
+        #{blogAuthorId,jdbcType=INTEGER},
+      </if>
+      <if test="blogAuthorAvatar != null">
+        #{blogAuthorAvatar,jdbcType=VARCHAR},
+      </if>
+      <if test="blogContent != null">
+        #{blogContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tf.entity.BlogExample" resultType="java.lang.Long">
+    select count(*) from blog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update blog
+    <set>
+      <if test="record.blogId != null">
+        blog_id = #{record.blogId,jdbcType=INTEGER},
+      </if>
+      <if test="record.blogTitle != null">
+        blog_title = #{record.blogTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.blogSummary != null">
+        blog_summary = #{record.blogSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.blogCreateTime != null">
+        blog_create_time = #{record.blogCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.blogUpdateTime != null">
+        blog_update_time = #{record.blogUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.blogThumb != null">
+        blog_thumb = #{record.blogThumb,jdbcType=INTEGER},
+      </if>
+      <if test="record.blogView != null">
+        blog_view = #{record.blogView,jdbcType=INTEGER},
+      </if>
+      <if test="record.blogReply != null">
+        blog_reply = #{record.blogReply,jdbcType=INTEGER},
+      </if>
+      <if test="record.blogTag != null">
+        blog_tag = #{record.blogTag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.blogCategoryId != null">
+        blog_category_id = #{record.blogCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="record.blogCover != null">
+        blog_cover = #{record.blogCover,jdbcType=VARCHAR},
+      </if>
+      <if test="record.blogRecommend != null">
+        blog_recommend = #{record.blogRecommend,jdbcType=DOUBLE},
+      </if>
+      <if test="record.blogAuthorId != null">
+        blog_author_id = #{record.blogAuthorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.blogAuthorAvatar != null">
+        blog_author_avatar = #{record.blogAuthorAvatar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.blogContent != null">
+        blog_content = #{record.blogContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update blog
+    set blog_id = #{record.blogId,jdbcType=INTEGER},
+      blog_title = #{record.blogTitle,jdbcType=VARCHAR},
+      blog_summary = #{record.blogSummary,jdbcType=VARCHAR},
+      blog_create_time = #{record.blogCreateTime,jdbcType=TIMESTAMP},
+      blog_update_time = #{record.blogUpdateTime,jdbcType=TIMESTAMP},
+      blog_thumb = #{record.blogThumb,jdbcType=INTEGER},
+      blog_view = #{record.blogView,jdbcType=INTEGER},
+      blog_reply = #{record.blogReply,jdbcType=INTEGER},
+      blog_tag = #{record.blogTag,jdbcType=VARCHAR},
+      blog_category_id = #{record.blogCategoryId,jdbcType=INTEGER},
+      blog_cover = #{record.blogCover,jdbcType=VARCHAR},
+      blog_recommend = #{record.blogRecommend,jdbcType=DOUBLE},
+      blog_author_id = #{record.blogAuthorId,jdbcType=INTEGER},
+      blog_author_avatar = #{record.blogAuthorAvatar,jdbcType=VARCHAR},
+      blog_content = #{record.blogContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update blog
+    set blog_id = #{record.blogId,jdbcType=INTEGER},
+      blog_title = #{record.blogTitle,jdbcType=VARCHAR},
+      blog_summary = #{record.blogSummary,jdbcType=VARCHAR},
+      blog_create_time = #{record.blogCreateTime,jdbcType=TIMESTAMP},
+      blog_update_time = #{record.blogUpdateTime,jdbcType=TIMESTAMP},
+      blog_thumb = #{record.blogThumb,jdbcType=INTEGER},
+      blog_view = #{record.blogView,jdbcType=INTEGER},
+      blog_reply = #{record.blogReply,jdbcType=INTEGER},
+      blog_tag = #{record.blogTag,jdbcType=VARCHAR},
+      blog_category_id = #{record.blogCategoryId,jdbcType=INTEGER},
+      blog_cover = #{record.blogCover,jdbcType=VARCHAR},
+      blog_recommend = #{record.blogRecommend,jdbcType=DOUBLE},
+      blog_author_id = #{record.blogAuthorId,jdbcType=INTEGER},
+      blog_author_avatar = #{record.blogAuthorAvatar,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tf.entity.Blog">
+    update blog
+    <set>
+      <if test="blogTitle != null">
+        blog_title = #{blogTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="blogSummary != null">
+        blog_summary = #{blogSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="blogCreateTime != null">
+        blog_create_time = #{blogCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="blogUpdateTime != null">
+        blog_update_time = #{blogUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="blogThumb != null">
+        blog_thumb = #{blogThumb,jdbcType=INTEGER},
+      </if>
+      <if test="blogView != null">
+        blog_view = #{blogView,jdbcType=INTEGER},
+      </if>
+      <if test="blogReply != null">
+        blog_reply = #{blogReply,jdbcType=INTEGER},
+      </if>
+      <if test="blogTag != null">
+        blog_tag = #{blogTag,jdbcType=VARCHAR},
+      </if>
+      <if test="blogCategoryId != null">
+        blog_category_id = #{blogCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="blogCover != null">
+        blog_cover = #{blogCover,jdbcType=VARCHAR},
+      </if>
+      <if test="blogRecommend != null">
+        blog_recommend = #{blogRecommend,jdbcType=DOUBLE},
+      </if>
+      <if test="blogAuthorId != null">
+        blog_author_id = #{blogAuthorId,jdbcType=INTEGER},
+      </if>
+      <if test="blogAuthorAvatar != null">
+        blog_author_avatar = #{blogAuthorAvatar,jdbcType=VARCHAR},
+      </if>
+      <if test="blogContent != null">
+        blog_content = #{blogContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where blog_id = #{blogId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tf.entity.Blog">
+    update blog
+    set blog_title = #{blogTitle,jdbcType=VARCHAR},
+      blog_summary = #{blogSummary,jdbcType=VARCHAR},
+      blog_create_time = #{blogCreateTime,jdbcType=TIMESTAMP},
+      blog_update_time = #{blogUpdateTime,jdbcType=TIMESTAMP},
+      blog_thumb = #{blogThumb,jdbcType=INTEGER},
+      blog_view = #{blogView,jdbcType=INTEGER},
+      blog_reply = #{blogReply,jdbcType=INTEGER},
+      blog_tag = #{blogTag,jdbcType=VARCHAR},
+      blog_category_id = #{blogCategoryId,jdbcType=INTEGER},
+      blog_cover = #{blogCover,jdbcType=VARCHAR},
+      blog_recommend = #{blogRecommend,jdbcType=DOUBLE},
+      blog_author_id = #{blogAuthorId,jdbcType=INTEGER},
+      blog_author_avatar = #{blogAuthorAvatar,jdbcType=VARCHAR},
+      blog_content = #{blogContent,jdbcType=LONGVARCHAR}
+    where blog_id = #{blogId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tf.entity.Blog">
+    update blog
+    set blog_title = #{blogTitle,jdbcType=VARCHAR},
+      blog_summary = #{blogSummary,jdbcType=VARCHAR},
+      blog_create_time = #{blogCreateTime,jdbcType=TIMESTAMP},
+      blog_update_time = #{blogUpdateTime,jdbcType=TIMESTAMP},
+      blog_thumb = #{blogThumb,jdbcType=INTEGER},
+      blog_view = #{blogView,jdbcType=INTEGER},
+      blog_reply = #{blogReply,jdbcType=INTEGER},
+      blog_tag = #{blogTag,jdbcType=VARCHAR},
+      blog_category_id = #{blogCategoryId,jdbcType=INTEGER},
+      blog_cover = #{blogCover,jdbcType=VARCHAR},
+      blog_recommend = #{blogRecommend,jdbcType=DOUBLE},
+      blog_author_id = #{blogAuthorId,jdbcType=INTEGER},
+      blog_author_avatar = #{blogAuthorAvatar,jdbcType=VARCHAR}
+    where blog_id = #{blogId,jdbcType=INTEGER}
+  </update>
+</mapper>

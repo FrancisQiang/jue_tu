@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @CrossOrigin
-@Api(tags = "获取Token")
 @Slf4j
 @RequestMapping(value = "/token")
 public class TokenController {

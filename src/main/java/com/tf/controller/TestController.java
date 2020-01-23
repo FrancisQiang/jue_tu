@@ -18,16 +18,6 @@ public class TestController {
     @Autowired
     JwtUtil jwtUtil;
 
-    @GetMapping(value = "/hello")
-    public String hello(){
-        return "hello world!";
-    }
-
-    @GetMapping(value = "/exception")
-    public String exception() throws GlobalException{
-        throw new GlobalException("错误", 1);
-    }
-
     /**
      * description: 模拟登录获取JWT令牌
      * @return:
@@ -35,7 +25,7 @@ public class TestController {
      * @time: 2020.01.22
      */
     @PostMapping("/login")
-    public BaseResult<String> login(@RequestBody String id){
+    public BaseResult<String> login(String id){
         //真实情况：输入账号密码进行校验，成功返回id再获取JWT令牌
         String sign = jwtUtil.sign(id);
         BaseResult<String> baseResult = new BaseResult<>(200,"success");

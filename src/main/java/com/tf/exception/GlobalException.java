@@ -1,5 +1,6 @@
 package com.tf.exception;
 
+import com.tf.constant.CodeMessage;
 import lombok.Data;
 import lombok.Getter;
 
@@ -12,11 +13,11 @@ public class GlobalException extends Exception {
 
     private static final long serialVersionUID = -3655264493408473309L;
 
-    private int code;
+    private CodeMessage codeMessage;
 
-    public GlobalException(String message, int code) {
-        super(message);
-        this.code = code;
+    public GlobalException(CodeMessage codeMessage) {
+        super(codeMessage.getMessage());
+        this.codeMessage = codeMessage;
     }
 
 

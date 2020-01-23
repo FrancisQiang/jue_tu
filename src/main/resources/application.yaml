@@ -24,6 +24,9 @@ fastdep:
       test:
         path: /test/permission
         role: jwt # jwt为需要进行token校验
+      blog:
+        path: /blog
+        role: jwt
       front:
         path: /test/login
         role: anon # anon为无需校验

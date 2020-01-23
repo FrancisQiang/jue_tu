@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
  * @author lgq
  * @date 2020/1/22
  */
-@Service
 public interface RedisService {
 
     /**
