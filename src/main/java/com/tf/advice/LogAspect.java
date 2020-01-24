@@ -60,7 +60,7 @@ public class LogAspect {
         double during = (end - start) / 1000.0;
         log.info("请求Url：" + content.requestUrl + "，请求地址：" + content.remoteAddr + "，请求参数：" +
                 JSON.toJSONString(content.parameterMap) + "，处理时长：" + during + "ms。");
-        return null;
+        return object;
     }
 
     @AfterThrowing(value = "pointcut()", throwing = "ex")
