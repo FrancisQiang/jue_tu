@@ -94,6 +94,4 @@ public class LogAspect {
         String requestUrl = request.getRequestURI();
         return new LogContent(parameterMap, remoteAddr, requestUrl);
     }
-
-
 }

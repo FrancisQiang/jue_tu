@@ -10,6 +10,7 @@ import com.tf.exception.GlobalException;
 import com.tf.service.RedisService;
 import com.tf.service.UserService;
 import com.tf.utils.GenerateRandomKey;
+import com.tf.utils.PasswordUtil;
 import com.tf.vo.LoginVO;
 import com.tf.vo.RegisterVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,15 +37,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public Integer login(LoginVO loginInfo) throws GlobalException {
         UserExample userExample = new UserExample();
-        userExample.createCriteria().andUserAccountEqualTo(loginInfo.getUserAccount()).andUserPasswordEqualTo(loginInfo.getPassword());
+        userExample.createCriteria().andUserAccountEqualTo(loginInfo.getUserAccount());
         List<User> users = userMapper.selectByExample(userExample);
         if(users.size() == 0){
-            throw new GlobalException(CodeMessage.USERNAME_PASSWORD_ERROR);
+            throw new GlobalException(CodeMessage.USER_NOT_EXIST);
         }
         if(users.get(0).getUserStatus().equals(1)){
             throw new GlobalException(CodeMessage.USER_ACCOUNT_LOCKED);
         }
-        return users.get(0).getUserId();
+        if(PasswordUtil.isPasswordCorrect(loginInfo.getPassword(),users.get(0).getUserSalt(),users.get(0).getUserPassword())){
+            return users.get(0).getUserId();
+
+        }else {
+            throw new GlobalException(new CodeMessage(1,"密码不正确"));
+        }
     }
 
     @Override
@@ -95,10 +101,15 @@ public class UserServiceImpl implements UserService {
         User insertUserInfo = new User();
         insertUserInfo.setUserAccount(registerVO.getUserAccount());
         insertUserInfo.setUserName(registerVO.getUserName());
-        insertUserInfo.setUserPassword(registerVO.getPassword());
         insertUserInfo.setUserAvatar("http://juetu.francisqiang.top/config/default_avatar.jpg");
-        //TODO 加密工具类准备好之后修改
-        insertUserInfo.setUserSalt("123456");
+        //生成盐值
+        String salt = PasswordUtil.generateSalt();
+        //加密
+        String encodePassword = PasswordUtil.encodeWithSalt(registerVO.getPassword(), salt);
+        //存储加密的密码
+        insertUserInfo.setUserPassword(encodePassword);
+        //存储盐值
+        insertUserInfo.setUserSalt(salt);
         insertUserInfo.setUserCreateTime(new Date());
         int insertResult = userMapper.insertSelective(insertUserInfo);
         return insertResult > 0;
