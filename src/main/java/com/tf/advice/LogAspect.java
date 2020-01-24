@@ -74,7 +74,7 @@ public class LogAspect {
         } else {
             errorMessage = ex.getMessage();
         }
-        log.info("请求URI：" + content.requestUrl + "，请求地址：" + content.remoteAddr + "，请求参数：" +
+        log.error("请求URI：" + content.requestUrl + "，请求地址：" + content.remoteAddr + "，请求参数：" +
                 JSON.toJSONString(content.parameterMap) + "，错误信息：" + errorMessage);
     }
 
