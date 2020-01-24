@@ -1,4 +1,4 @@
-package com.tf.controller;
+package com.tf.controller.token;
 
 import com.qiniu.util.Auth;
 import io.swagger.annotations.Api;

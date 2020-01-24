@@ -22,6 +22,8 @@ public class CodeMessage {
     public static final CodeMessage SAME_USER_ACCOUNT = new CodeMessage(1003, "该用户名已经被使用");
     public static final CodeMessage ERROR_VERIFICATION = new CodeMessage(1004, "验证码不正确");
     public static final CodeMessage BLOG_ADD_ERROR = new CodeMessage(2001, "添加博客失败");
+    public static final CodeMessage BLOG_DELETE_ERROR = new CodeMessage(2002, "删除博客失败");
+    public static final CodeMessage BLOG_EDIT_ERROR = new CodeMessage(2003, "编辑博客失败");
 
     private Integer code;
     private String message;

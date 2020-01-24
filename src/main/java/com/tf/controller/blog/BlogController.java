@@ -3,9 +3,14 @@ package com.tf.controller.blog;
 import com.louislivi.fastdep.shirojwt.jwt.JwtUtil;
 import com.tf.exception.GlobalException;
 import com.tf.service.impl.BlogServiceImpl;
+import com.tf.util.ValidateUtil;
 import com.tf.vo.blog.BlogAddVO;
+import com.tf.vo.blog.BlogEditVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * @author lgq
@@ -27,9 +32,20 @@ public class BlogController {
     }
 
     @PostMapping(value = "")
-    public void addBlog(@RequestBody BlogAddVO blogAddVO) throws GlobalException {
-        String userId = jwtUtil.getUserId();
-        blogService.addBlog(Integer.valueOf(userId), blogAddVO);
+    public void addBlog(@RequestBody @Valid BlogAddVO blogAddVO, BindingResult bindingResult) throws GlobalException {
+        ValidateUtil.paramValidate(bindingResult);
+        blogService.addBlog(Integer.valueOf(jwtUtil.getUserId()), blogAddVO);
+    }
+
+    @DeleteMapping(value = "/{blogId}")
+    public void deleteBlog(@PathVariable(value = "blogId") Integer blogId) throws GlobalException {
+        blogService.deleteBlog(Integer.valueOf(jwtUtil.getUserId()), blogId);
+    }
+
+    @PatchMapping(value = "")
+    public void editBlog(@RequestBody @Valid BlogEditVO blogEditVO, BindingResult bindingResult) throws GlobalException{
+        ValidateUtil.paramValidate(bindingResult);
+        blogService.editBlog(Integer.valueOf(jwtUtil.getUserId()), blogEditVO);
     }
 
 
