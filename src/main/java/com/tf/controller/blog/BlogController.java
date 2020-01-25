@@ -56,5 +56,10 @@ public class BlogController {
         return blogService.getPersonalBlogList(Integer.valueOf(jwtUtil.getUserId()), pageIndex);
     }
 
+    @GetMapping(value = "/list/{userId}/{pageIndex}")
+    public PageInfoDTO<BlogBriefListDTO> getPersonalBlogList(@PathVariable("userId") Integer userId,
+            @PathVariable("pageIndex")Integer pageIndex) {
+        return blogService.getPersonalBlogList(userId, pageIndex);
+    }
 
 }
