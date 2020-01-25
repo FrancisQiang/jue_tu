@@ -4,6 +4,7 @@ import com.qiniu.util.StringUtils;
 import com.tf.constant.CodeMessage;
 import com.tf.dao.BlogMapper;
 import com.tf.dao.UserMapper;
+import com.tf.dto.blog.BlogBriefListDTO;
 import com.tf.entity.Blog;
 import com.tf.entity.BlogExample;
 import com.tf.entity.User;
@@ -16,7 +17,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.util.List;
 
 /**
  * @author lgq
@@ -76,5 +77,11 @@ public class BlogServiceImpl implements BlogService {
         if (blogMapper.updateByPrimaryKeySelective(blog) == 0) {
             throw new GlobalException(CodeMessage.BLOG_EDIT_ERROR);
         }
+    }
+
+    @Override
+    public List<BlogBriefListDTO> getPersonalBlogList(Integer userId, Integer pageIndex) {
+        Integer firstLimit = (pageIndex - 1) * 10;
+        return blogMapper.getPersonalBlogList(userId,firstLimit);
     }
 }

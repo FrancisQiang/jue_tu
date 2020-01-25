@@ -1,6 +1,7 @@
 package com.tf.controller.blog;
 
 import com.louislivi.fastdep.shirojwt.jwt.JwtUtil;
+import com.tf.dto.blog.BlogBriefListDTO;
 import com.tf.exception.GlobalException;
 import com.tf.service.impl.BlogServiceImpl;
 import com.tf.util.ValidateUtil;
@@ -11,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author lgq
@@ -46,6 +48,11 @@ public class BlogController {
     public void editBlog(@RequestBody @Valid BlogEditVO blogEditVO, BindingResult bindingResult) throws GlobalException{
         ValidateUtil.paramValidate(bindingResult);
         blogService.editBlog(Integer.valueOf(jwtUtil.getUserId()), blogEditVO);
+    }
+
+    @GetMapping(value = "/list/{pageIndex}")
+    public List<BlogBriefListDTO> getPersonalBlogList(@PathVariable("pageIndex")Integer pageIndex) {
+        return blogService.getPersonalBlogList(Integer.valueOf(jwtUtil.getUserId()), pageIndex);
     }
 
 

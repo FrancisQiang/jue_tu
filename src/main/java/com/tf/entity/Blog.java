@@ -25,7 +25,7 @@ public class Blog {
 
     private String blogCover;
 
-    private Double blogRecommend;
+    private Boolean blogRecommend;
 
     private Integer blogAuthorId;
 
@@ -121,11 +121,11 @@ public class Blog {
         this.blogCover = blogCover == null ? null : blogCover.trim();
     }
 
-    public Double getBlogRecommend() {
+    public Boolean getBlogRecommend() {
         return blogRecommend;
     }
 
-    public void setBlogRecommend(Double blogRecommend) {
+    public void setBlogRecommend(Boolean blogRecommend) {
         this.blogRecommend = blogRecommend;
     }
 

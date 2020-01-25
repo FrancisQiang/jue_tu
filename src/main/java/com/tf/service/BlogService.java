@@ -1,9 +1,12 @@
 package com.tf.service;
 
+import com.tf.dto.blog.BlogBriefListDTO;
 import com.tf.exception.GlobalException;
 import com.tf.vo.blog.BlogAddVO;
 import com.tf.vo.blog.BlogEditVO;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author lgq
@@ -35,5 +38,13 @@ public interface BlogService {
      * @throws GlobalException 全局异常
      */
     void editBlog(Integer userId, BlogEditVO blogEditVO) throws GlobalException;
+
+    /**
+     * 获取个人用户的博客简要信息列表
+     * @param userId 用户id
+     * @param pageIndex 页数
+     * @return 博客简要信息列表
+     */
+    List<BlogBriefListDTO> getPersonalBlogList(Integer userId, Integer pageIndex);
 
 }

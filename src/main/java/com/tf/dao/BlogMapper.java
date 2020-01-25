@@ -1,5 +1,6 @@
 package com.tf.dao;
 
+import com.tf.dto.blog.BlogBriefListDTO;
 import com.tf.entity.Blog;
 import com.tf.entity.BlogExample;
 import java.util.List;
@@ -33,4 +34,6 @@ public interface BlogMapper {
     int updateByPrimaryKeyWithBLOBs(Blog record);
 
     int updateByPrimaryKey(Blog record);
+
+    List<BlogBriefListDTO> getPersonalBlogList(@Param("userId") Integer userId,@Param("firstLimit")Integer firstLimit);
 }

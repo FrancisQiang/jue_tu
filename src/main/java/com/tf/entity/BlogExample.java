@@ -815,52 +815,52 @@ public class BlogExample {
             return (Criteria) this;
         }
 
-        public Criteria andBlogRecommendEqualTo(Double value) {
+        public Criteria andBlogRecommendEqualTo(Boolean value) {
             addCriterion("blog_recommend =", value, "blogRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andBlogRecommendNotEqualTo(Double value) {
+        public Criteria andBlogRecommendNotEqualTo(Boolean value) {
             addCriterion("blog_recommend <>", value, "blogRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andBlogRecommendGreaterThan(Double value) {
+        public Criteria andBlogRecommendGreaterThan(Boolean value) {
             addCriterion("blog_recommend >", value, "blogRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andBlogRecommendGreaterThanOrEqualTo(Double value) {
+        public Criteria andBlogRecommendGreaterThanOrEqualTo(Boolean value) {
             addCriterion("blog_recommend >=", value, "blogRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andBlogRecommendLessThan(Double value) {
+        public Criteria andBlogRecommendLessThan(Boolean value) {
             addCriterion("blog_recommend <", value, "blogRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andBlogRecommendLessThanOrEqualTo(Double value) {
+        public Criteria andBlogRecommendLessThanOrEqualTo(Boolean value) {
             addCriterion("blog_recommend <=", value, "blogRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andBlogRecommendIn(List<Double> values) {
+        public Criteria andBlogRecommendIn(List<Boolean> values) {
             addCriterion("blog_recommend in", values, "blogRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andBlogRecommendNotIn(List<Double> values) {
+        public Criteria andBlogRecommendNotIn(List<Boolean> values) {
             addCriterion("blog_recommend not in", values, "blogRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andBlogRecommendBetween(Double value1, Double value2) {
+        public Criteria andBlogRecommendBetween(Boolean value1, Boolean value2) {
             addCriterion("blog_recommend between", value1, value2, "blogRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andBlogRecommendNotBetween(Double value1, Double value2) {
+        public Criteria andBlogRecommendNotBetween(Boolean value1, Boolean value2) {
             addCriterion("blog_recommend not between", value1, value2, "blogRecommend");
             return (Criteria) this;
         }
