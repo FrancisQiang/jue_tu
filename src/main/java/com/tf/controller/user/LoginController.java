@@ -6,7 +6,7 @@ import com.tf.dto.CaptchaDTO;
 import com.tf.dto.LoginDTO;
 import com.tf.exception.GlobalException;
 import com.tf.service.UserService;
-import com.tf.util.ValidateUtil;
+import com.tf.utils.ValidateUtil;
 import com.tf.vo.LoginVO;
 import com.tf.vo.RegisterVO;
 import org.springframework.beans.factory.annotation.Autowired;

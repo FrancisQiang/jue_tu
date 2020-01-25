@@ -1,4 +1,4 @@
-package com.tf.util;
+package com.tf.utils;
 
 import com.tf.constant.CodeMessage;
 import com.tf.exception.GlobalException;

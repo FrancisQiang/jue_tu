@@ -6,8 +6,7 @@ import com.tf.dto.blog.BlogDetailDTO;
 import com.tf.dto.page.PageInfoDTO;
 import com.tf.exception.GlobalException;
 import com.tf.service.BlogService;
-import com.tf.service.impl.BlogServiceImpl;
-import com.tf.util.ValidateUtil;
+import com.tf.utils.ValidateUtil;
 import com.tf.vo.blog.BlogAddVO;
 import com.tf.vo.blog.BlogEditVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * @author lgq
