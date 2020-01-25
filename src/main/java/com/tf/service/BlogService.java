@@ -1,6 +1,7 @@
 package com.tf.service;
 
 import com.tf.dto.blog.BlogBriefListDTO;
+import com.tf.dto.page.PageInfoDTO;
 import com.tf.exception.GlobalException;
 import com.tf.vo.blog.BlogAddVO;
 import com.tf.vo.blog.BlogEditVO;
@@ -45,6 +46,6 @@ public interface BlogService {
      * @param pageIndex 页数
      * @return 博客简要信息列表
      */
-    List<BlogBriefListDTO> getPersonalBlogList(Integer userId, Integer pageIndex);
+    PageInfoDTO<BlogBriefListDTO> getPersonalBlogList(Integer userId, Integer pageIndex);
 
 }

@@ -467,7 +467,6 @@
              blog_category
         where blog.blog_category_id = blog_category.blog_category_id
           and blog.blog_author_id = #{userId}
-        limit #{firstLimit},10;
     </select>
     <!--  自定义SQL-->
 </mapper>

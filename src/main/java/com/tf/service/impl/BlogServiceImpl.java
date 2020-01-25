@@ -1,10 +1,12 @@
 package com.tf.service.impl;
 
-import com.qiniu.util.StringUtils;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.tf.constant.CodeMessage;
 import com.tf.dao.BlogMapper;
 import com.tf.dao.UserMapper;
 import com.tf.dto.blog.BlogBriefListDTO;
+import com.tf.dto.page.PageInfoDTO;
 import com.tf.entity.Blog;
 import com.tf.entity.BlogExample;
 import com.tf.entity.User;
@@ -29,6 +31,8 @@ public class BlogServiceImpl implements BlogService {
     private final BlogMapper blogMapper;
 
     private final UserMapper userMapper;
+
+    private static final int PAGE_SIZE = 3;
 
     @Autowired
     @SuppressWarnings("all")
@@ -80,8 +84,16 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<BlogBriefListDTO> getPersonalBlogList(Integer userId, Integer pageIndex) {
-        Integer firstLimit = (pageIndex - 1) * 10;
-        return blogMapper.getPersonalBlogList(userId,firstLimit);
+    public PageInfoDTO<BlogBriefListDTO> getPersonalBlogList(Integer userId, Integer pageIndex) {
+        PageHelper.startPage(pageIndex, PAGE_SIZE, true, true, null);
+        List<BlogBriefListDTO> personalBlogList = blogMapper.getPersonalBlogList(userId);
+        PageInfo<BlogBriefListDTO> pageInfo = new PageInfo<>(personalBlogList);
+        PageInfoDTO<BlogBriefListDTO> pageInfoDTO = new PageInfoDTO<>();
+        pageInfoDTO.setCurrentPage(pageInfo.getPageNum());
+        pageInfoDTO.setList(pageInfo.getList());
+        pageInfoDTO.setTotalPage(pageInfo.getPages());
+        pageInfoDTO.setTotal(pageInfo.getTotal());
+        pageInfoDTO.setSize(pageInfo.getSize());
+        return pageInfoDTO;
     }
 }

@@ -35,5 +35,5 @@ public interface BlogMapper {
 
     int updateByPrimaryKey(Blog record);
 
-    List<BlogBriefListDTO> getPersonalBlogList(@Param("userId") Integer userId,@Param("firstLimit")Integer firstLimit);
+    List<BlogBriefListDTO> getPersonalBlogList(@Param("userId") Integer userId);
 }

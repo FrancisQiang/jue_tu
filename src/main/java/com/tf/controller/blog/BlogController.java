@@ -2,6 +2,7 @@ package com.tf.controller.blog;
 
 import com.louislivi.fastdep.shirojwt.jwt.JwtUtil;
 import com.tf.dto.blog.BlogBriefListDTO;
+import com.tf.dto.page.PageInfoDTO;
 import com.tf.exception.GlobalException;
 import com.tf.service.impl.BlogServiceImpl;
 import com.tf.util.ValidateUtil;
@@ -51,7 +52,7 @@ public class BlogController {
     }
 
     @GetMapping(value = "/list/{pageIndex}")
-    public List<BlogBriefListDTO> getPersonalBlogList(@PathVariable("pageIndex")Integer pageIndex) {
+    public PageInfoDTO<BlogBriefListDTO> getPersonalBlogList(@PathVariable("pageIndex")Integer pageIndex) {
         return blogService.getPersonalBlogList(Integer.valueOf(jwtUtil.getUserId()), pageIndex);
     }
 
