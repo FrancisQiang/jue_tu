@@ -2,8 +2,10 @@ package com.tf.controller.blog;
 
 import com.louislivi.fastdep.shirojwt.jwt.JwtUtil;
 import com.tf.dto.blog.BlogBriefListDTO;
+import com.tf.dto.blog.BlogDetailDTO;
 import com.tf.dto.page.PageInfoDTO;
 import com.tf.exception.GlobalException;
+import com.tf.service.BlogService;
 import com.tf.service.impl.BlogServiceImpl;
 import com.tf.util.ValidateUtil;
 import com.tf.vo.blog.BlogAddVO;
@@ -24,14 +26,19 @@ import java.util.List;
 @CrossOrigin
 public class BlogController {
 
-    private final BlogServiceImpl blogService;
+    private final BlogService blogService;
 
     private final JwtUtil jwtUtil;
 
     @Autowired
-    public BlogController(BlogServiceImpl blogService, JwtUtil jwtUtil) {
+    public BlogController(BlogService blogService, JwtUtil jwtUtil) {
         this.blogService = blogService;
         this.jwtUtil = jwtUtil;
+    }
+
+    @GetMapping(value = "/{blogId}")
+    public BlogDetailDTO getBlogDetail(@PathVariable("blogId")Integer blogId) throws GlobalException{
+        return blogService.getBlogDetail(blogId);
     }
 
     @PostMapping(value = "")

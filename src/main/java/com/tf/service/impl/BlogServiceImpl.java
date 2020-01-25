@@ -6,6 +6,7 @@ import com.tf.constant.CodeMessage;
 import com.tf.dao.BlogMapper;
 import com.tf.dao.UserMapper;
 import com.tf.dto.blog.BlogBriefListDTO;
+import com.tf.dto.blog.BlogDetailDTO;
 import com.tf.dto.page.PageInfoDTO;
 import com.tf.entity.Blog;
 import com.tf.entity.BlogExample;
@@ -95,5 +96,10 @@ public class BlogServiceImpl implements BlogService {
         pageInfoDTO.setTotal(pageInfo.getTotal());
         pageInfoDTO.setSize(pageInfo.getSize());
         return pageInfoDTO;
+    }
+
+    @Override
+    public BlogDetailDTO getBlogDetail(Integer blogId) throws GlobalException {
+        return blogMapper.getBlogDetailByBlogId(blogId);
     }
 }

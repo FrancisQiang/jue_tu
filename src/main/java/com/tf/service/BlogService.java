@@ -1,6 +1,7 @@
 package com.tf.service;
 
 import com.tf.dto.blog.BlogBriefListDTO;
+import com.tf.dto.blog.BlogDetailDTO;
 import com.tf.dto.page.PageInfoDTO;
 import com.tf.exception.GlobalException;
 import com.tf.vo.blog.BlogAddVO;
@@ -47,5 +48,13 @@ public interface BlogService {
      * @return 博客简要信息列表
      */
     PageInfoDTO<BlogBriefListDTO> getPersonalBlogList(Integer userId, Integer pageIndex);
+
+    /**
+     * 获取博客详情
+     * @param blogId 博客ID
+     * @return 博客详情传输对象
+     * @throws GlobalException 全局异常
+     */
+    BlogDetailDTO getBlogDetail(Integer blogId) throws GlobalException;
 
 }

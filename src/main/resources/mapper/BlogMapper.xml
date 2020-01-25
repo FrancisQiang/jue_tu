@@ -35,6 +35,23 @@
         <result column="blog_author_id" jdbcType="INTEGER" property="blogAuthorId"/>
         <result column="blog_author_avatar" jdbcType="VARCHAR" property="blogAuthorAvatar"/>
     </resultMap>
+    <resultMap id="BlogDetailDTO" type="com.tf.dto.blog.BlogDetailDTO">
+        <id column="blog_id" jdbcType="INTEGER" property="blogId"/>
+        <result column="blog_title" jdbcType="VARCHAR" property="blogTitle"/>
+        <result column="blog_summary" jdbcType="VARCHAR" property="blogSummary"/>
+        <result column="blog_create_time" jdbcType="TIMESTAMP" property="blogCreateTime"/>
+        <result column="blog_update_time" jdbcType="TIMESTAMP" property="blogUpdateTime"/>
+        <result column="blog_thumb" jdbcType="INTEGER" property="blogThumb"/>
+        <result column="blog_view" jdbcType="INTEGER" property="blogView"/>
+        <result column="blog_reply" jdbcType="INTEGER" property="blogReply"/>
+        <result column="blog_tag" jdbcType="VARCHAR" property="blogTag"/>
+        <result column="blog_category_name" jdbcType="VARCHAR" property="blogCategoryName"/>
+        <result column="blog_cover" jdbcType="VARCHAR" property="blogCover"/>
+        <result column="blog_recommend" jdbcType="BIT" property="blogRecommend"/>
+        <result column="blog_author_id" jdbcType="INTEGER" property="blogAuthorId"/>
+        <result column="blog_author_avatar" jdbcType="VARCHAR" property="blogAuthorAvatar"/>
+        <result column="blog_content" jdbcType="LONGVARCHAR" property="blogContent"/>
+    </resultMap>
     <sql id="Example_Where_Clause">
         <where>
             <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -467,6 +484,29 @@
              blog_category
         where blog.blog_category_id = blog_category.blog_category_id
           and blog.blog_author_id = #{userId}
+    </select>
+
+
+    <select id="getBlogDetailByBlogId" parameterType="java.lang.Integer" resultMap="BlogDetailDTO">
+        select blog_id,
+               blog_title,
+               blog_summary,
+               blog_create_time,
+               blog_update_time,
+               blog_thumb,
+               blog_view,
+               blog_reply,
+               blog_tag,
+               blog_category_name,
+               blog_cover,
+               blog_recommend,
+               blog_author_id,
+               blog_author_avatar,
+               blog_content
+        from blog,
+             blog_category
+        where blog.blog_category_id = blog_category.blog_category_id
+          and blog.blog_id = #{blogId}
     </select>
     <!--  自定义SQL-->
 </mapper>
