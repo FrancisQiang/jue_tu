@@ -1,5 +1,6 @@
 package com.tf.dao;
 
+import com.tf.dto.blog.BlogCommentListDTO;
 import com.tf.entity.BlogComment;
 import com.tf.entity.BlogCommentExample;
 import java.util.List;
@@ -33,4 +34,6 @@ public interface BlogCommentMapper {
     int updateByPrimaryKeyWithBLOBs(BlogComment record);
 
     int updateByPrimaryKey(BlogComment record);
+
+    List<BlogCommentListDTO> getCommentByBlogId(Integer blogId);
 }

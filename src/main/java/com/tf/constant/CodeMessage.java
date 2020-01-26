@@ -27,6 +27,10 @@ public class CodeMessage {
     public static final CodeMessage BLOG_DELETE_ERROR = new CodeMessage(2002, "删除博客失败");
     public static final CodeMessage BLOG_EDIT_ERROR = new CodeMessage(2003, "编辑博客失败");
 
+    public static final CodeMessage BLOG_COMMENT_ADD_ERROR = new CodeMessage(2004, "博客评论添加失败");
+    public static final CodeMessage BLOG_COMMENT_DELETE_ERROR = new CodeMessage(2005, "博客评论删除失败");
+
+
     private Integer code;
     private String message;
 

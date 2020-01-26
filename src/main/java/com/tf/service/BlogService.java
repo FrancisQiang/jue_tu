@@ -1,11 +1,14 @@
 package com.tf.service;
 
 import com.tf.dto.blog.BlogBriefListDTO;
+import com.tf.dto.blog.BlogCommentListDTO;
 import com.tf.dto.blog.BlogDetailDTO;
 import com.tf.dto.page.PageInfoDTO;
 import com.tf.exception.GlobalException;
 import com.tf.vo.blog.BlogAddVO;
 import com.tf.vo.blog.BlogEditVO;
+import com.tf.vo.blog.PostBlogCommentVO;
+import jdk.nashorn.internal.objects.Global;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,5 +59,27 @@ public interface BlogService {
      * @throws GlobalException 全局异常
      */
     BlogDetailDTO getBlogDetail(Integer blogId) throws GlobalException;
+
+    /**
+     * 发表评论
+     * @param postBlogCommentVO 评论VO
+     * @param userId 用户ID
+     * @throws GlobalException 全局异常
+     */
+    void postBlogComment(PostBlogCommentVO postBlogCommentVO, Integer userId) throws GlobalException;
+
+    /**
+     * 获取某篇博客的评论列表
+     * @param blogId 博客ID
+     * @return 博客评论列表
+     */
+    List<BlogCommentListDTO> getCommentListByBlogId(Integer blogId);
+
+    /**
+     * 删除评论内容
+     * @param blogCommentId 博客评论id
+     * @throws GlobalException 全局异常
+     */
+    void deleteBlogComment(Integer blogCommentId) throws GlobalException;
 
 }
