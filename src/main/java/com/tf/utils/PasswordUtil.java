@@ -47,13 +47,12 @@ public class PasswordUtil {
      */
     public static String generateSalt(){
         String seed = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()-+=";
-        Random randomLength = new Random(15);
-        int length = randomLength.nextInt();
-        Random random = new Random(seed.length());
-        int value = random.nextInt();
+        Random randomLength = new Random(4);
+        int length = randomLength.nextInt(5);
+        int value;
         StringBuilder salt = new StringBuilder();
         for (int i = 0; i < length ; i++) {
-            value = random.nextInt();
+            value = randomLength.nextInt(seed.length());
             salt.append(seed.charAt(value));
         }
         return salt.toString();
