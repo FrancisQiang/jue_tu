@@ -4,6 +4,7 @@ import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.tf.constant.CodeMessage;
 import com.tf.dao.UserMapper;
 import com.tf.dto.CaptchaDTO;
+import com.tf.dto.UserInfoDTO;
 import com.tf.entity.User;
 import com.tf.entity.UserExample;
 import com.tf.exception.GlobalException;
@@ -13,6 +14,7 @@ import com.tf.utils.GenerateRandomKey;
 import com.tf.utils.PasswordUtil;
 import com.tf.vo.LoginVO;
 import com.tf.vo.RegisterVO;
+import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,8 @@ public class UserServiceImpl implements UserService {
     private RedisService redisService;
     @Autowired
     private DefaultKaptcha defaultKaptcha;
+    @Autowired
+    private DozerBeanMapper dozerBeanMapper;
 
     @Override
     public Integer login(LoginVO loginInfo) throws GlobalException {
@@ -113,5 +117,17 @@ public class UserServiceImpl implements UserService {
         insertUserInfo.setUserCreateTime(new Date());
         int insertResult = userMapper.insertSelective(insertUserInfo);
         return insertResult > 0;
+    }
+
+    @Override
+    public UserInfoDTO userInfo(Integer userId) throws GlobalException {
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andUserIdEqualTo(userId);
+        List<User> users = userMapper.selectByExample(userExample);
+        if(users.size() == 0){
+            throw new GlobalException(CodeMessage.USER_NOT_EXIST);
+        }
+        User userInfo = users.get(0);
+        return dozerBeanMapper.map(userInfo,UserInfoDTO.class);
     }
 }

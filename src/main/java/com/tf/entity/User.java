@@ -1,5 +1,7 @@
 package com.tf.entity;
 
+import org.dozer.Mapping;
+
 import java.util.Date;
 
 public class User {
@@ -64,6 +66,7 @@ public class User {
      *
      * @mbg.generated Wed Jan 22 20:27:21 CST 2020
      */
+    @Mapping("job")
     private String userJob;
 
     /**
@@ -73,6 +76,7 @@ public class User {
      *
      * @mbg.generated Wed Jan 22 20:27:21 CST 2020
      */
+    @Mapping("company")
     private String userCompany;
 
     /**
@@ -82,6 +86,7 @@ public class User {
      *
      * @mbg.generated Wed Jan 22 20:27:21 CST 2020
      */
+    @Mapping("description")
     private String userDescription;
 
     /**
@@ -91,6 +96,7 @@ public class User {
      *
      * @mbg.generated Wed Jan 22 20:27:21 CST 2020
      */
+    @Mapping("avatar")
     private String userAvatar;
 
     /**
@@ -109,6 +115,7 @@ public class User {
      *
      * @mbg.generated Wed Jan 22 20:27:21 CST 2020
      */
+    @Mapping("blogViews")
     private Integer userBlogViews;
 
     /**
@@ -118,6 +125,7 @@ public class User {
      *
      * @mbg.generated Wed Jan 22 20:27:21 CST 2020
      */
+    @Mapping("blogThumbs")
     private Integer userBlogThumbs;
 
     /**
@@ -127,6 +135,7 @@ public class User {
      *
      * @mbg.generated Wed Jan 22 20:27:21 CST 2020
      */
+    @Mapping("home")
     private String userHome;
 
     /**
@@ -136,6 +145,7 @@ public class User {
      *
      * @mbg.generated Wed Jan 22 20:27:21 CST 2020
      */
+    @Mapping("weibo")
     private String userWeibo;
 
     /**
@@ -145,6 +155,7 @@ public class User {
      *
      * @mbg.generated Wed Jan 22 20:27:21 CST 2020
      */
+    @Mapping("github")
     private String userGithub;
 
     /**
@@ -154,6 +165,7 @@ public class User {
      *
      * @mbg.generated Wed Jan 22 20:27:21 CST 2020
      */
+    @Mapping("blogNum")
     private Integer userBlogNum;
 
     /**
@@ -163,6 +175,7 @@ public class User {
      *
      * @mbg.generated Wed Jan 22 20:27:21 CST 2020
      */
+    @Mapping("bookNum")
     private Integer userBookNum;
 
     /**
@@ -172,6 +185,7 @@ public class User {
      *
      * @mbg.generated Wed Jan 22 20:27:21 CST 2020
      */
+    @Mapping("treeholeNum")
     private Integer userTreeholeNum;
 
     /**
@@ -199,6 +213,7 @@ public class User {
      *
      * @mbg.generated Wed Jan 22 20:27:21 CST 2020
      */
+    @Mapping("createTime")
     private Date userCreateTime;
 
     /**

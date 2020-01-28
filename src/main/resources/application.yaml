@@ -33,6 +33,9 @@ fastdep:
       login:
         path: /sign_in
         role: anon
+      user:
+        path: /userInfo
+        role: jwt
     secret: "6Dx8SIuaHXJYnpsG18SSpjPs50lZcT52" # jwt秘钥
 #    expireTime: 7200000 # token有效期
 #    prefix: "Bearer "  # token校验时的前缀
