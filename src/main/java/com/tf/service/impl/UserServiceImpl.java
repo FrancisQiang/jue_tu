@@ -38,6 +38,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private DozerBeanMapper dozerBeanMapper;
 
+    private static final String BASE_AVATAR_URL = "http://juetu.francisqiang.top/config/default_avatar.jpg";
+    private static final int EXPIRE_TIME = 300;
+
     @Override
     public Integer login(LoginVO loginInfo) throws GlobalException {
         UserExample userExample = new UserExample();
@@ -63,8 +66,7 @@ public class UserServiceImpl implements UserService {
         String codeText = defaultKaptcha.createText();
         //将生成的文字和随机数字存入redis
         String key = GenerateRandomKey.generateRandomVerificationKey();
-        //TODO 时间应该设置为常量
-        redisService.setex(key,(String)codeText,300);
+        redisService.setex(key,(String)codeText,EXPIRE_TIME);
         String s = redisService.get(key, String.class);
         System.out.println(s);
         ByteArrayOutputStream outputStream = null;
@@ -85,7 +87,7 @@ public class UserServiceImpl implements UserService {
             }
         }
         String codeImage = Base64.getEncoder().encodeToString(imagesToBytes);
-        return new CaptchaDTO(key,codeImage);
+        return new CaptchaDTO(key,"data:image/jpeg;base64," + codeImage.replaceAll("\r\n", ""));
     }
 
     @Override
@@ -105,7 +107,7 @@ public class UserServiceImpl implements UserService {
         User insertUserInfo = new User();
         insertUserInfo.setUserAccount(registerVO.getUserAccount());
         insertUserInfo.setUserName(registerVO.getUserName());
-        insertUserInfo.setUserAvatar("http://juetu.francisqiang.top/config/default_avatar.jpg");
+        insertUserInfo.setUserAvatar(BASE_AVATAR_URL);
         //生成盐值
         String salt = PasswordUtil.generateSalt();
         //加密
