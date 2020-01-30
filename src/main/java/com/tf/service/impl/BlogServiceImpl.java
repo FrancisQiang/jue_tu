@@ -185,10 +185,10 @@ public class BlogServiceImpl implements BlogService {
         blogListInTimeRange = blogListInTimeRange.stream().sorted(Comparator.comparingInt(blog -> blog.getBlogThumb() + blog.getBlogView() / 100))
         .collect(Collectors.toList());
         // 存入 Redis 中 并设置10分钟超时时长
-        blogListInTimeRange.forEach(item -> redisService.rpush(RedisKey.HOT_BLOG_LIST, item.toString()));
-        redisService.expire(RedisKey.HOT_BLOG_LIST, 600, TimeUnit.SECONDS);
+        blogListInTimeRange.forEach(item -> redisService.rpush(RedisKey.HOT_BLOG_LIST, item));
+        redisService.expire(RedisKey.HOT_BLOG_LIST, 10, TimeUnit.SECONDS);
         if (blogListInTimeRange.size() < (int)Constant.PER_PAGE_NUM_TEN * pageIndex - 1) {
-            return blogListInTimeRange.subList((int)Constant.PER_PAGE_NUM_TEN * (pageIndex - 1), blogListInTimeRange.size() - 1);
+            return blogListInTimeRange.subList((int)Constant.PER_PAGE_NUM_TEN * (pageIndex - 1), blogListInTimeRange.size());
         }
         return blogListInTimeRange.subList((int)Constant.PER_PAGE_NUM_TEN * (pageIndex - 1),
                 (int)Constant.PER_PAGE_NUM_TEN * pageIndex - 1);

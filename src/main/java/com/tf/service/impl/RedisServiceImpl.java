@@ -91,7 +91,7 @@ public class RedisServiceImpl implements RedisService {
         ListOperations<String, String> listOperations = stringRedisTemplate.opsForList();
         List<String> range = listOperations.range(key, l, r);
         assert range != null;
-        return range.stream().map(item -> (T)item).collect(Collectors.toList());
+        return range.stream().map(item -> JSON.parseObject(item, clazz)).collect(Collectors.toList());
     }
 
     @Override
