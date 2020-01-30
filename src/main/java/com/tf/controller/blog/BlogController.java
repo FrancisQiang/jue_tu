@@ -10,6 +10,7 @@ import com.tf.service.BlogService;
 import com.tf.utils.ValidateUtil;
 import com.tf.vo.blog.BlogAddVO;
 import com.tf.vo.blog.BlogEditVO;
+import com.tf.vo.blog.HotBlogParamVO;
 import com.tf.vo.blog.PostBlogCommentVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -86,6 +87,13 @@ public class BlogController {
     @DeleteMapping(value = "/comment/{blogCommentId}")
     public void deleteBlogComment(@PathVariable(value = "blogCommentId") Integer blogCommentId) throws GlobalException {
         blogService.deleteBlogComment(blogCommentId);
+    }
+
+    @GetMapping(value = "/hot")
+    public List<BlogBriefListDTO> getHotBlogList(@RequestBody @Valid HotBlogParamVO hotBlogParamVO,
+                                                 BindingResult bindingResult) throws GlobalException{
+        ValidateUtil.paramValidate(bindingResult);
+        return blogService.getHotBlogList(hotBlogParamVO.getDays(), hotBlogParamVO.getPageIndex());
     }
 
 }

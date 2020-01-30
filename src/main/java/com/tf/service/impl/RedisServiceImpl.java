@@ -3,30 +3,28 @@ package com.tf.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.tf.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * @author lgq
  * @date 2020/1/22
  */
 @Service
+@SuppressWarnings("unchecked")
 public class RedisServiceImpl implements RedisService {
 
-
     private final StringRedisTemplate stringRedisTemplate;
-
-    private final RedisTemplate redisTemplate;
 
     private static int AUTO_INCREMENT = 1;
 
     @Autowired
-    public RedisServiceImpl(StringRedisTemplate stringRedisTemplate, RedisTemplate redisTemplate) {
+    public RedisServiceImpl(StringRedisTemplate stringRedisTemplate) {
         this.stringRedisTemplate = stringRedisTemplate;
-        this.redisTemplate = redisTemplate;
     }
 
     @Override
@@ -74,18 +72,46 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public void hset(Object key, Object field, Object value) {
-        if (key instanceof String && field instanceof String
+
+    public void hset(String key, Object field, Object value) {
+        if (field instanceof String
             && value instanceof String) {
-            redisTemplate.opsForHash().put(key, field, value);
+            stringRedisTemplate.opsForHash().put(key, field, value);
         }
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public <T> T hget(Object key, Object field, Class<T> clazz) {
-        HashOperations hashOperations = redisTemplate.opsForHash();
+    public <T> T hget(String key, Object field, Class<T> clazz) {
+        HashOperations hashOperations = stringRedisTemplate.opsForHash();
         return (T)hashOperations.get(key, field);
+    }
+
+    @Override
+    public <T> List<T> lrange(String key, long l, long r, Class<T> clazz) {
+        ListOperations<String, String> listOperations = stringRedisTemplate.opsForList();
+        List<String> range = listOperations.range(key, l, r);
+        assert range != null;
+        return range.stream().map(item -> (T)item).collect(Collectors.toList());
+    }
+
+    @Override
+    public <T> List<T> lrangeAll(String key, Class<T> clazz) {
+        return lrange(key, 0, -1, clazz);
+    }
+
+    @Override
+    public void rpush(String key, Object value) {
+        ListOperations<String, String> listOperations = stringRedisTemplate.opsForList();
+        listOperations.rightPush(key, JSON.toJSONString(value));
+    }
+
+    @Override
+    public void expire(String key, long timeout, TimeUnit timeUnit) {
+        stringRedisTemplate.expire(key, timeout, timeUnit);
+    }
+
+    @Override
+    public boolean del(String key) {
+        return stringRedisTemplate.delete(key);
     }
 }

@@ -80,4 +80,12 @@ public interface BlogService {
      */
     void deleteBlogComment(Integer blogCommentId) throws GlobalException;
 
+    /**
+     * 获取热门文章列表
+     * @param days 时间范围内
+     * @param pageIndex 分页
+     * @return 文章简要列表
+     */
+    List<BlogBriefListDTO> getHotBlogList(Integer days, Integer pageIndex);
+
 }

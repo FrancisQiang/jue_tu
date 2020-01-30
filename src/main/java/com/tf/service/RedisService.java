@@ -2,6 +2,9 @@ package com.tf.service;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author lgq
  * @date 2020/1/22
@@ -62,7 +65,7 @@ public interface RedisService {
      * @param field 键
      * @param value 值
      */
-    void hset(Object key, Object field, Object value);
+    void hset(String key, Object field, Object value);
 
     /**
      * hash获取
@@ -72,6 +75,49 @@ public interface RedisService {
      * @param <T> 泛型
      * @return 值
      */
-    <T> T hget(Object key, Object field, Class<T> clazz);
+    <T> T hget(String key, Object field, Class<T> clazz);
+
+    /**
+     * list range操作
+     * @param key 键
+     * @param l 左索引
+     * @param r 又索引
+     * @param clazz 类
+     * @param <T> 泛型
+     * @return list
+     */
+    <T> List<T> lrange(String key, long l, long r, Class<T> clazz);
+
+    /**
+     * 获取所有列表
+     * @param key 键
+     * @param clazz 类型
+     * @param <T> 泛型
+     * @return 列表
+     */
+    <T> List<T> lrangeAll(String key, Class<T> clazz);
+
+    /**
+     *
+     * @param key
+     * @param value
+     */
+    void rpush(String key, Object value);
+
+    /**
+     * 设置键的超时时间
+     * @param key 键
+     * @param timeout 超时时长
+     * @param timeUnit 单位
+     */
+    void expire(String key, long timeout, TimeUnit timeUnit);
+
+    /**
+     * 删除指定key
+     * @param key 键
+     * @return true则代表删除成功
+     */
+    boolean del(String key);
+
 
 }

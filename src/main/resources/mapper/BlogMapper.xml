@@ -508,5 +508,26 @@
         where blog.blog_category_id = blog_category.blog_category_id
           and blog.blog_id = #{blogId}
     </select>
+
+    <select id="getBlogListInTimeRange" parameterType="java.lang.Integer" resultMap="BlogBriefListDTO">
+        select blog_id,
+               blog_title,
+               blog_summary,
+               blog_create_time,
+               blog_thumb,
+               blog_view,
+               blog_reply,
+               blog_tag,
+               blog_category_name,
+               blog_cover,
+               blog_recommend,
+               blog_author_id,
+               blog_author_avatar
+        from blog,
+             blog_category
+        where blog.blog_category_id = blog_category.blog_category_id
+        and DATE_FORMAT(blog_create_time,'%Y%m%d')>=DATE_FORMAT(DATE_SUB(CURDATE(),INTERVAL #{days} DAY),'%Y%m%d')
+        order by blog_create_time
+    </select>
     <!--  自定义SQL-->
 </mapper>
