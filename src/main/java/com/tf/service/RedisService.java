@@ -117,7 +117,8 @@ public interface RedisService {
      * @param key 键
      * @return true则代表删除成功
      */
-    boolean del(String key);
+    Boolean del(String key);
 
+    Long llen(String key);
 
 }

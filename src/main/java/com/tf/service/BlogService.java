@@ -4,6 +4,7 @@ import com.tf.dto.blog.BlogBriefListDTO;
 import com.tf.dto.blog.BlogCommentListDTO;
 import com.tf.dto.blog.BlogDetailDTO;
 import com.tf.dto.page.PageInfoDTO;
+import com.tf.dto.page.SimplePageInfoDTO;
 import com.tf.exception.GlobalException;
 import com.tf.vo.blog.BlogAddVO;
 import com.tf.vo.blog.BlogEditVO;
@@ -86,6 +87,6 @@ public interface BlogService {
      * @param pageIndex 分页
      * @return 文章简要列表
      */
-    List<BlogBriefListDTO> getHotBlogList(Integer days, Integer pageIndex);
+    SimplePageInfoDTO<BlogBriefListDTO> getHotBlogList(Integer days, Integer pageIndex);
 
 }

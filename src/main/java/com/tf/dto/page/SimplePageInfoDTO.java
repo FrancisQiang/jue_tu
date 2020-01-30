@@ -8,22 +8,15 @@ import java.util.List;
 
 /**
  * @author lgq
- * @date 2020/1/25
+ * @date 2020/1/30
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public  class PageInfoDTO<T> {
-
-    private Integer currentPage;
-
-    private Integer totalPage;
-
-    private Long total;
-
-    private Integer size;
+public class SimplePageInfoDTO<T> {
 
     private Boolean hasNextPage;
 
     private List<T> list;
+
 }

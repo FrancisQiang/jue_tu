@@ -111,7 +111,13 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    public boolean del(String key) {
+    public Boolean del(String key) {
         return stringRedisTemplate.delete(key);
+    }
+
+    @Override
+    public Long llen(String key) {
+        ListOperations<String, String> listOperations = stringRedisTemplate.opsForList();
+        return listOperations.size(key);
     }
 }

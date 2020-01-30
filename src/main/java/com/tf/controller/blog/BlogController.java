@@ -5,6 +5,7 @@ import com.tf.dto.blog.BlogBriefListDTO;
 import com.tf.dto.blog.BlogCommentListDTO;
 import com.tf.dto.blog.BlogDetailDTO;
 import com.tf.dto.page.PageInfoDTO;
+import com.tf.dto.page.SimplePageInfoDTO;
 import com.tf.exception.GlobalException;
 import com.tf.service.BlogService;
 import com.tf.utils.ValidateUtil;
@@ -90,8 +91,8 @@ public class BlogController {
     }
 
     @GetMapping(value = "/hot")
-    public List<BlogBriefListDTO> getHotBlogList(@RequestBody @Valid HotBlogParamVO hotBlogParamVO,
-                                                 BindingResult bindingResult) throws GlobalException{
+    public SimplePageInfoDTO<BlogBriefListDTO> getHotBlogList(@RequestBody @Valid HotBlogParamVO hotBlogParamVO,
+                                                              BindingResult bindingResult) throws GlobalException{
         ValidateUtil.paramValidate(bindingResult);
         return blogService.getHotBlogList(hotBlogParamVO.getDays(), hotBlogParamVO.getPageIndex());
     }
