@@ -103,6 +103,8 @@ public class UserServiceImpl implements UserService {
         //校验验证码
         if(! (registerVO.getCaptcha().equals(redisService.get(registerVO.getKey(),String.class)))){
             throw new GlobalException(CodeMessage.ERROR_VERIFICATION);
+        }else {
+            redisService.del(registerVO.getKey());
         }
         User insertUserInfo = new User();
         insertUserInfo.setUserAccount(registerVO.getUserAccount());
