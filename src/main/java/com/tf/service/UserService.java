@@ -4,6 +4,7 @@ import com.tf.dto.CaptchaDTO;
 import com.tf.dto.UserInfoDTO;
 import com.tf.exception.GlobalException;
 import com.tf.vo.LoginVO;
+import com.tf.vo.ModifyUserInfoVO;
 import com.tf.vo.RegisterVO;
 
 public interface UserService {
@@ -35,5 +36,12 @@ public interface UserService {
      * @time: 2020.01.28
      */
     UserInfoDTO userInfo(Integer userId) throws GlobalException;
+
+    /**
+     * description: 修改用户信息
+     * @author: Wei Yuyang
+     * @time: 2020.02.01
+     */
+    boolean modifyUserInfo(ModifyUserInfoVO modifyUserInfoVO);
 
 }

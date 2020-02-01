@@ -13,6 +13,7 @@ import com.tf.service.UserService;
 import com.tf.utils.GenerateRandomKey;
 import com.tf.utils.PasswordUtil;
 import com.tf.vo.LoginVO;
+import com.tf.vo.ModifyUserInfoVO;
 import com.tf.vo.RegisterVO;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,5 +134,10 @@ public class UserServiceImpl implements UserService {
         }
         User userInfo = users.get(0);
         return dozerBeanMapper.map(userInfo,UserInfoDTO.class);
+    }
+
+    @Override
+    public boolean modifyUserInfo(ModifyUserInfoVO modifyUserInfoVO) {
+        return userMapper.updateByPrimaryKeySelective(dozerBeanMapper.map(modifyUserInfoVO,User.class)) > 0;
     }
 }

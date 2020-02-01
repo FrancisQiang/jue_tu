@@ -22,13 +22,15 @@ public class CodeMessage {
     public static final CodeMessage INCORRECT_VERIFICATION_CODE = new CodeMessage(1002, "验证码错误");
     public static final CodeMessage SAME_USER_ACCOUNT = new CodeMessage(1003, "该用户名已经被使用");
     public static final CodeMessage ERROR_VERIFICATION = new CodeMessage(1004, "验证码不正确");
+    public static final CodeMessage ERROR_MODIFY_USER_INFO = new CodeMessage(1005,"修改用户信息失败");
 
     public static final CodeMessage BLOG_ADD_ERROR = new CodeMessage(2001, "添加博客失败");
     public static final CodeMessage BLOG_DELETE_ERROR = new CodeMessage(2002, "删除博客失败");
     public static final CodeMessage BLOG_EDIT_ERROR = new CodeMessage(2003, "编辑博客失败");
-
     public static final CodeMessage BLOG_COMMENT_ADD_ERROR = new CodeMessage(2004, "博客评论添加失败");
     public static final CodeMessage BLOG_COMMENT_DELETE_ERROR = new CodeMessage(2005, "博客评论删除失败");
+
+    public static final CodeMessage TREE_HOLE_MESSAGE_ERROR = new CodeMessage(3001,"消息不存在或者已经被删除");
 
 
     private Integer code;
