@@ -41,4 +41,6 @@ public class BlogBriefListDTO {
 
     private String blogAuthorAvatar;
 
+    private String blogAuthorName;
+
 }

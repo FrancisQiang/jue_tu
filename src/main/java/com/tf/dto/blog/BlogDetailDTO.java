@@ -45,4 +45,6 @@ public class BlogDetailDTO {
 
     private String blogAuthorAvatar;
 
+    private String blogAuthorName;
+
 }

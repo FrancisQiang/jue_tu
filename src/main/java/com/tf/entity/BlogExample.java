@@ -994,6 +994,76 @@ public class BlogExample {
             addCriterion("blog_author_avatar not between", value1, value2, "blogAuthorAvatar");
             return (Criteria) this;
         }
+
+        public Criteria andBlogAuthorNameIsNull() {
+            addCriterion("blog_author_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogAuthorNameIsNotNull() {
+            addCriterion("blog_author_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogAuthorNameEqualTo(String value) {
+            addCriterion("blog_author_name =", value, "blogAuthorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogAuthorNameNotEqualTo(String value) {
+            addCriterion("blog_author_name <>", value, "blogAuthorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogAuthorNameGreaterThan(String value) {
+            addCriterion("blog_author_name >", value, "blogAuthorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogAuthorNameGreaterThanOrEqualTo(String value) {
+            addCriterion("blog_author_name >=", value, "blogAuthorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogAuthorNameLessThan(String value) {
+            addCriterion("blog_author_name <", value, "blogAuthorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogAuthorNameLessThanOrEqualTo(String value) {
+            addCriterion("blog_author_name <=", value, "blogAuthorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogAuthorNameLike(String value) {
+            addCriterion("blog_author_name like", value, "blogAuthorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogAuthorNameNotLike(String value) {
+            addCriterion("blog_author_name not like", value, "blogAuthorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogAuthorNameIn(List<String> values) {
+            addCriterion("blog_author_name in", values, "blogAuthorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogAuthorNameNotIn(List<String> values) {
+            addCriterion("blog_author_name not in", values, "blogAuthorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogAuthorNameBetween(String value1, String value2) {
+            addCriterion("blog_author_name between", value1, value2, "blogAuthorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogAuthorNameNotBetween(String value1, String value2) {
+            addCriterion("blog_author_name not between", value1, value2, "blogAuthorName");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

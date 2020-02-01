@@ -31,6 +31,8 @@ public class Blog {
 
     private String blogAuthorAvatar;
 
+    private String blogAuthorName;
+
     private String blogContent;
 
     public Integer getBlogId() {
@@ -143,6 +145,14 @@ public class Blog {
 
     public void setBlogAuthorAvatar(String blogAuthorAvatar) {
         this.blogAuthorAvatar = blogAuthorAvatar == null ? null : blogAuthorAvatar.trim();
+    }
+
+    public String getBlogAuthorName() {
+        return blogAuthorName;
+    }
+
+    public void setBlogAuthorName(String blogAuthorName) {
+        this.blogAuthorName = blogAuthorName == null ? null : blogAuthorName.trim();
     }
 
     public String getBlogContent() {
