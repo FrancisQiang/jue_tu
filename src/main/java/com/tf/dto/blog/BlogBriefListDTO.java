@@ -35,7 +35,7 @@ public class BlogBriefListDTO {
 
     private String blogCover;
 
-    private Double blogRecommend;
+    private Boolean blogRecommend;
 
     private Integer blogAuthorId;
 

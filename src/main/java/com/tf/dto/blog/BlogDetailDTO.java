@@ -39,7 +39,7 @@ public class BlogDetailDTO {
 
     private String blogCover;
 
-    private Double blogRecommend;
+    private Boolean blogRecommend;
 
     private Integer blogAuthorId;
 
