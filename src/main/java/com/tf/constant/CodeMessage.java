@@ -23,6 +23,7 @@ public class CodeMessage {
     public static final CodeMessage SAME_USER_ACCOUNT = new CodeMessage(1003, "该用户名已经被使用");
     public static final CodeMessage ERROR_VERIFICATION = new CodeMessage(1004, "验证码不正确");
     public static final CodeMessage ERROR_MODIFY_USER_INFO = new CodeMessage(1005,"修改用户信息失败");
+    public static final CodeMessage ENTER_OLD_PASSWORD_ERROR = new CodeMessage(1006,"输入的旧密码不正确");
 
     public static final CodeMessage BLOG_ADD_ERROR = new CodeMessage(2001, "添加博客失败");
     public static final CodeMessage BLOG_DELETE_ERROR = new CodeMessage(2002, "删除博客失败");

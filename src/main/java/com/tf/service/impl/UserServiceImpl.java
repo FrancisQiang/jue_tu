@@ -12,12 +12,15 @@ import com.tf.service.RedisService;
 import com.tf.service.UserService;
 import com.tf.utils.GenerateRandomKey;
 import com.tf.utils.PasswordUtil;
+import com.tf.utils.ValidateUtil;
+import com.tf.vo.ChangePasswordVO;
 import com.tf.vo.LoginVO;
 import com.tf.vo.ModifyUserInfoVO;
 import com.tf.vo.RegisterVO;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -30,17 +33,22 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
     private UserMapper userMapper;
-    @Autowired
     private RedisService redisService;
-    @Autowired
     private DefaultKaptcha defaultKaptcha;
-    @Autowired
     private DozerBeanMapper dozerBeanMapper;
 
     private static final String BASE_AVATAR_URL = "http://juetu.francisqiang.top/config/default_avatar.jpg";
     private static final int EXPIRE_TIME = 300;
+
+    @Autowired
+    @SuppressWarnings("all")
+    public UserServiceImpl(UserMapper userMapper, RedisService redisService, DefaultKaptcha defaultKaptcha, DozerBeanMapper dozerBeanMapper) {
+        this.userMapper = userMapper;
+        this.redisService = redisService;
+        this.defaultKaptcha = defaultKaptcha;
+        this.dozerBeanMapper = dozerBeanMapper;
+    }
 
     @Override
     public Integer login(LoginVO loginInfo) throws GlobalException {
@@ -139,5 +147,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean modifyUserInfo(ModifyUserInfoVO modifyUserInfoVO) {
         return userMapper.updateByPrimaryKeySelective(dozerBeanMapper.map(modifyUserInfoVO,User.class)) > 0;
+    }
+
+    @Override
+    public boolean changePassword(ChangePasswordVO changePasswordVO, Integer userId) throws GlobalException {
+        UserExample userExample = new UserExample();
+        User user = userMapper.selectByPrimaryKey(userId);
+        if(user == null){
+            throw new GlobalException(CodeMessage.USER_NOT_EXIST);
+        }
+
+        if(user.getUserPassword().equals(PasswordUtil.encodeWithSalt(changePasswordVO.getOldPassword(),user.getUserSalt()))){
+            User changePassword = new User();
+            changePassword.setUserId(user.getUserId());
+            changePassword.setUserPassword(PasswordUtil.encodeWithSalt(changePasswordVO.getNewPassword(),user.getUserSalt()));
+            return userMapper.updateByPrimaryKeySelective(changePassword) > 0;
+        }else {
+            throw new GlobalException(CodeMessage.ENTER_OLD_PASSWORD_ERROR);
+        }
     }
 }

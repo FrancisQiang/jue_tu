@@ -3,6 +3,7 @@ package com.tf.service;
 import com.tf.dto.CaptchaDTO;
 import com.tf.dto.UserInfoDTO;
 import com.tf.exception.GlobalException;
+import com.tf.vo.ChangePasswordVO;
 import com.tf.vo.LoginVO;
 import com.tf.vo.ModifyUserInfoVO;
 import com.tf.vo.RegisterVO;
@@ -43,5 +44,12 @@ public interface UserService {
      * @time: 2020.02.01
      */
     boolean modifyUserInfo(ModifyUserInfoVO modifyUserInfoVO);
+
+    /**
+     * description:
+     * @author: Wei Yuyang
+     * @time: 2020.02.03
+     */
+    boolean changePassword(ChangePasswordVO changePasswordVO,Integer userId) throws GlobalException;
 
 }

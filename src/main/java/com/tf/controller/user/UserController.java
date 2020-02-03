@@ -5,10 +5,15 @@ import com.tf.constant.CodeMessage;
 import com.tf.dto.UserInfoDTO;
 import com.tf.exception.GlobalException;
 import com.tf.service.UserService;
+import com.tf.utils.ValidateUtil;
+import com.tf.vo.ChangePasswordVO;
 import com.tf.vo.ModifyUserInfoVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * @author Wei yuyaung
@@ -16,11 +21,14 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 public class UserController {
-    @Autowired
     private JwtUtil jwtUtil;
-    @Autowired
     private UserService userService;
 
+    @Autowired
+    public UserController(JwtUtil jwtUtil, UserService userService) {
+        this.jwtUtil = jwtUtil;
+        this.userService = userService;
+    }
 
     /**
      * description: 获取用户个人信息
@@ -63,5 +71,22 @@ public class UserController {
         }
     }
 
+    /**
+     * description: 修改密码
+     * @return:
+     * @author: Wei Yuyang
+     * @time: 2020.02.03
+     */
+    @PostMapping("/user/password")
+    @RequiresPermissions("user:info")
+    public String changePassword(@RequestBody @Valid ChangePasswordVO changePasswordVO, BindingResult results) throws GlobalException {
+        ValidateUtil.paramValidate(results);
+        boolean success = userService.changePassword(changePasswordVO, Integer.valueOf(jwtUtil.getUserId()));
+        if(success){
+            return "";
+        }else {
+            throw new GlobalException(CodeMessage.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }
