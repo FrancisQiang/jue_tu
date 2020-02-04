@@ -3,6 +3,7 @@ package com.tf.service;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -119,6 +120,45 @@ public interface RedisService {
      */
     Boolean del(String key);
 
+    /**
+     * 获取列表长度
+     * @param key 键
+     * @return 长度
+     */
     Long llen(String key);
+
+    /**
+     * 给有序列表添加元素
+     * @param key 键
+     * @param value 值 唯一
+     * @param score 分数 用于排行
+     * @return 是否添加成功
+     */
+    Boolean zadd(String key, String value, double score);
+
+    /**
+     * 获取有序列表指定范围
+     * @param key 键
+     * @param start 开始位置
+     * @param end 结束位置
+     * @return String集合
+     */
+    Set<String> zrange(String key, long start, long end);
+
+    /**
+     * 获取有序列表长度
+     * @param key 键
+     * @return 长度
+     */
+    Long zlen(String key);
+
+    /**
+     * 获取有序列表指定范围 倒序
+     * @param key 键
+     * @param start 开始位置
+     * @param end 结束位置
+     * @return String集合
+     */
+    Set<String> zrevrange(String key, long start, long end);
 
 }

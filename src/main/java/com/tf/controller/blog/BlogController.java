@@ -97,4 +97,10 @@ public class BlogController {
         return blogService.getHotBlogList(hotBlogParamVO.getDays(), hotBlogParamVO.getPageIndex());
     }
 
+    @GetMapping(value = "/recommend/{pageIndex}")
+    public SimplePageInfoDTO<BlogBriefListDTO> getRecommendBlogList(@PathVariable(value = "pageIndex")
+                                                                    Integer pageIndex) throws GlobalException{
+        return blogService.getRecommendBlogList(pageIndex);
+    }
+
 }

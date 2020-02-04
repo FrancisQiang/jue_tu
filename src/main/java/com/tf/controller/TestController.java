@@ -2,6 +2,7 @@ package com.tf.controller;
 
 import com.louislivi.fastdep.shirojwt.jwt.JwtUtil;
 import com.tf.exception.GlobalException;
+import com.tf.service.RedisService;
 import com.tf.vo.BaseResult;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ public class TestController {
 
     @Autowired
     JwtUtil jwtUtil;
+
+    @Autowired
+    RedisService redisService;
 
     /**
      * description: 模拟登录获取JWT令牌
@@ -44,6 +48,11 @@ public class TestController {
     public BaseResult<String> permission(){
         String userId = jwtUtil.getUserId();
         return new BaseResult<>(200,"该用户拥有测试权限");
+    }
+
+    @GetMapping(value = "/{redisKey}")
+    public boolean removeKey(@PathVariable(value = "redisKey") String rediskey) {
+        return redisService.del(rediskey);
     }
 
 }

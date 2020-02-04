@@ -43,4 +43,6 @@ public class BlogBriefListDTO {
 
     private String blogAuthorName;
 
+    private Double blogRankIndex;
+
 }

@@ -1064,6 +1064,66 @@ public class BlogExample {
             addCriterion("blog_author_name not between", value1, value2, "blogAuthorName");
             return (Criteria) this;
         }
+
+        public Criteria andBlogRankIndexIsNull() {
+            addCriterion("blog_rank_index is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogRankIndexIsNotNull() {
+            addCriterion("blog_rank_index is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogRankIndexEqualTo(Double value) {
+            addCriterion("blog_rank_index =", value, "blogRankIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogRankIndexNotEqualTo(Double value) {
+            addCriterion("blog_rank_index <>", value, "blogRankIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogRankIndexGreaterThan(Double value) {
+            addCriterion("blog_rank_index >", value, "blogRankIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogRankIndexGreaterThanOrEqualTo(Double value) {
+            addCriterion("blog_rank_index >=", value, "blogRankIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogRankIndexLessThan(Double value) {
+            addCriterion("blog_rank_index <", value, "blogRankIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogRankIndexLessThanOrEqualTo(Double value) {
+            addCriterion("blog_rank_index <=", value, "blogRankIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogRankIndexIn(List<Double> values) {
+            addCriterion("blog_rank_index in", values, "blogRankIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogRankIndexNotIn(List<Double> values) {
+            addCriterion("blog_rank_index not in", values, "blogRankIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogRankIndexBetween(Double value1, Double value2) {
+            addCriterion("blog_rank_index between", value1, value2, "blogRankIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andBlogRankIndexNotBetween(Double value1, Double value2) {
+            addCriterion("blog_rank_index not between", value1, value2, "blogRankIndex");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

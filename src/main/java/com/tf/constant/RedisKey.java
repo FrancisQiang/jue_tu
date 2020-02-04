@@ -21,4 +21,9 @@ public class RedisKey {
      */
     public static final String HOT_BLOG_LIST_SEVEN_DAY = "HOT_BLOG_LIST_SEVEN_DAY";
 
+    /**
+     * 推荐博客列表
+     */
+    public static final String RECOMMEND_BLOG_LIST = "RECOMMEND_BLOG_LIST";
+
 }

@@ -34,8 +34,7 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <table tableName="tree_hole" domainObjectName="TreeHole"/>
-        <table tableName="tree_hole_comment" domainObjectName="TreeHoleComment"/>
+        <table tableName="blog" domainObjectName="Blog"/>
 
 
     </context>

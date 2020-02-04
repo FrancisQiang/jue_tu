@@ -33,6 +33,8 @@ public class Blog {
 
     private String blogAuthorName;
 
+    private Double blogRankIndex;
+
     private String blogContent;
 
     public Integer getBlogId() {
@@ -153,6 +155,14 @@ public class Blog {
 
     public void setBlogAuthorName(String blogAuthorName) {
         this.blogAuthorName = blogAuthorName == null ? null : blogAuthorName.trim();
+    }
+
+    public Double getBlogRankIndex() {
+        return blogRankIndex;
+    }
+
+    public void setBlogRankIndex(Double blogRankIndex) {
+        this.blogRankIndex = blogRankIndex;
     }
 
     public String getBlogContent() {

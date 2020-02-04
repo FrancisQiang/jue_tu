@@ -41,4 +41,6 @@ public interface BlogMapper {
     BlogDetailDTO getBlogDetailByBlogId(Integer blogId);
 
     List<BlogBriefListDTO> getBlogListInTimeRange(Integer days);
+
+    List<BlogBriefListDTO> getRecommendBlogList();
 }

@@ -7,6 +7,7 @@ import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -119,5 +120,29 @@ public class RedisServiceImpl implements RedisService {
     public Long llen(String key) {
         ListOperations<String, String> listOperations = stringRedisTemplate.opsForList();
         return listOperations.size(key);
+    }
+
+    @Override
+    public Boolean zadd(String key, String value, double score) {
+        ZSetOperations<String, String> stringZSetOperations = stringRedisTemplate.opsForZSet();
+        return stringZSetOperations.add(key, value, score);
+    }
+
+    @Override
+    public Set<String> zrange(String key, long start, long end) {
+        ZSetOperations<String, String> stringZSetOperations = stringRedisTemplate.opsForZSet();
+        return stringZSetOperations.range(key, start, end);
+    }
+
+    @Override
+    public Long zlen(String key) {
+        ZSetOperations<String, String> stringZSetOperations = stringRedisTemplate.opsForZSet();
+        return stringZSetOperations.size(key);
+    }
+
+    @Override
+    public Set<String> zrevrange(String key, long start, long end) {
+        ZSetOperations<String, String> stringZSetOperations = stringRedisTemplate.opsForZSet();
+        return stringZSetOperations.reverseRange(key, start, end);
     }
 }

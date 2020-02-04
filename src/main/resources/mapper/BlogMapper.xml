@@ -17,12 +17,14 @@
     <result column="blog_author_id" jdbcType="INTEGER" property="blogAuthorId" />
     <result column="blog_author_avatar" jdbcType="VARCHAR" property="blogAuthorAvatar" />
     <result column="blog_author_name" jdbcType="VARCHAR" property="blogAuthorName" />
+    <result column="blog_rank_index" jdbcType="DOUBLE" property="blogRankIndex" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.tf.entity.Blog">
     <result column="blog_content" jdbcType="LONGVARCHAR" property="blogContent" />
   </resultMap>
 
-<!--  自定义结果集-->
+
+  <!--  自定义结果集-->
   <resultMap id="BlogBriefListDTO" type="com.tf.dto.blog.BlogBriefListDTO">
     <id column="blog_id" jdbcType="INTEGER" property="blogId"/>
     <result column="blog_title" jdbcType="VARCHAR" property="blogTitle"/>
@@ -38,6 +40,7 @@
     <result column="blog_author_id" jdbcType="INTEGER" property="blogAuthorId"/>
     <result column="blog_author_avatar" jdbcType="VARCHAR" property="blogAuthorAvatar"/>
     <result column="blog_author_name" jdbcType="VARCHAR" property="blogAuthorName" />
+    <result column="blog_rank_index" jdbcType="DOUBLE" property="blogRankIndex" />
   </resultMap>
   <resultMap id="BlogDetailDTO" type="com.tf.dto.blog.BlogDetailDTO">
     <id column="blog_id" jdbcType="INTEGER" property="blogId"/>
@@ -57,7 +60,7 @@
     <result column="blog_author_avatar" jdbcType="VARCHAR" property="blogAuthorAvatar"/>
     <result column="blog_content" jdbcType="LONGVARCHAR" property="blogContent"/>
   </resultMap>
-<!--  自定义结果集-->
+  <!--  自定义结果集-->
 
   <sql id="Example_Where_Clause">
     <where>
@@ -120,7 +123,7 @@
   <sql id="Base_Column_List">
     blog_id, blog_title, blog_summary, blog_create_time, blog_update_time, blog_thumb, 
     blog_view, blog_reply, blog_tag, blog_category_id, blog_cover, blog_recommend, blog_author_id, 
-    blog_author_avatar, blog_author_name
+    blog_author_avatar, blog_author_name, blog_rank_index
   </sql>
   <sql id="Blob_Column_List">
     blog_content
@@ -179,13 +182,13 @@
       blog_view, blog_reply, blog_tag, 
       blog_category_id, blog_cover, blog_recommend, 
       blog_author_id, blog_author_avatar, blog_author_name, 
-      blog_content)
+      blog_rank_index, blog_content)
     values (#{blogId,jdbcType=INTEGER}, #{blogTitle,jdbcType=VARCHAR}, #{blogSummary,jdbcType=VARCHAR}, 
       #{blogCreateTime,jdbcType=TIMESTAMP}, #{blogUpdateTime,jdbcType=TIMESTAMP}, #{blogThumb,jdbcType=INTEGER}, 
       #{blogView,jdbcType=INTEGER}, #{blogReply,jdbcType=INTEGER}, #{blogTag,jdbcType=VARCHAR}, 
       #{blogCategoryId,jdbcType=INTEGER}, #{blogCover,jdbcType=VARCHAR}, #{blogRecommend,jdbcType=BIT}, 
       #{blogAuthorId,jdbcType=INTEGER}, #{blogAuthorAvatar,jdbcType=VARCHAR}, #{blogAuthorName,jdbcType=VARCHAR}, 
-      #{blogContent,jdbcType=LONGVARCHAR})
+      #{blogRankIndex,jdbcType=DOUBLE}, #{blogContent,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.tf.entity.Blog">
     insert into blog
@@ -234,6 +237,9 @@
       </if>
       <if test="blogAuthorName != null">
         blog_author_name,
+      </if>
+      <if test="blogRankIndex != null">
+        blog_rank_index,
       </if>
       <if test="blogContent != null">
         blog_content,
@@ -284,6 +290,9 @@
       </if>
       <if test="blogAuthorName != null">
         #{blogAuthorName,jdbcType=VARCHAR},
+      </if>
+      <if test="blogRankIndex != null">
+        #{blogRankIndex,jdbcType=DOUBLE},
       </if>
       <if test="blogContent != null">
         #{blogContent,jdbcType=LONGVARCHAR},
@@ -344,6 +353,9 @@
       <if test="record.blogAuthorName != null">
         blog_author_name = #{record.blogAuthorName,jdbcType=VARCHAR},
       </if>
+      <if test="record.blogRankIndex != null">
+        blog_rank_index = #{record.blogRankIndex,jdbcType=DOUBLE},
+      </if>
       <if test="record.blogContent != null">
         blog_content = #{record.blogContent,jdbcType=LONGVARCHAR},
       </if>
@@ -369,6 +381,7 @@
       blog_author_id = #{record.blogAuthorId,jdbcType=INTEGER},
       blog_author_avatar = #{record.blogAuthorAvatar,jdbcType=VARCHAR},
       blog_author_name = #{record.blogAuthorName,jdbcType=VARCHAR},
+      blog_rank_index = #{record.blogRankIndex,jdbcType=DOUBLE},
       blog_content = #{record.blogContent,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -390,7 +403,8 @@
       blog_recommend = #{record.blogRecommend,jdbcType=BIT},
       blog_author_id = #{record.blogAuthorId,jdbcType=INTEGER},
       blog_author_avatar = #{record.blogAuthorAvatar,jdbcType=VARCHAR},
-      blog_author_name = #{record.blogAuthorName,jdbcType=VARCHAR}
+      blog_author_name = #{record.blogAuthorName,jdbcType=VARCHAR},
+      blog_rank_index = #{record.blogRankIndex,jdbcType=DOUBLE}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -440,6 +454,9 @@
       <if test="blogAuthorName != null">
         blog_author_name = #{blogAuthorName,jdbcType=VARCHAR},
       </if>
+      <if test="blogRankIndex != null">
+        blog_rank_index = #{blogRankIndex,jdbcType=DOUBLE},
+      </if>
       <if test="blogContent != null">
         blog_content = #{blogContent,jdbcType=LONGVARCHAR},
       </if>
@@ -462,6 +479,7 @@
       blog_author_id = #{blogAuthorId,jdbcType=INTEGER},
       blog_author_avatar = #{blogAuthorAvatar,jdbcType=VARCHAR},
       blog_author_name = #{blogAuthorName,jdbcType=VARCHAR},
+      blog_rank_index = #{blogRankIndex,jdbcType=DOUBLE},
       blog_content = #{blogContent,jdbcType=LONGVARCHAR}
     where blog_id = #{blogId,jdbcType=INTEGER}
   </update>
@@ -480,7 +498,8 @@
       blog_recommend = #{blogRecommend,jdbcType=BIT},
       blog_author_id = #{blogAuthorId,jdbcType=INTEGER},
       blog_author_avatar = #{blogAuthorAvatar,jdbcType=VARCHAR},
-      blog_author_name = #{blogAuthorName,jdbcType=VARCHAR}
+      blog_author_name = #{blogAuthorName,jdbcType=VARCHAR},
+      blog_rank_index = #{blogRankIndex,jdbcType=DOUBLE}
     where blog_id = #{blogId,jdbcType=INTEGER}
   </update>
 
@@ -498,7 +517,8 @@
            blog_cover,
            blog_recommend,
            blog_author_id,
-           blog_author_avatar
+           blog_author_avatar,
+           blog_rank_index
     from blog,
          blog_category
     where blog.blog_category_id = blog_category.blog_category_id
@@ -543,13 +563,35 @@
            blog_recommend,
            blog_author_id,
            blog_author_avatar,
-           blog_author_name
+           blog_author_name,
+           blog_rank_index
     from blog,
          blog_category
     where blog.blog_category_id = blog_category.blog_category_id
       and DATE_FORMAT(blog_create_time,'%Y%m%d')>=DATE_FORMAT(DATE_SUB(CURDATE(),INTERVAL #{days} DAY),'%Y%m%d')
     order by blog_create_time
   </select>
-  <!--  自定义SQL-->
 
+  <select id="getRecommendBlogList" resultMap="BlogBriefListDTO">
+    select blog_id,
+           blog_title,
+           blog_summary,
+           blog_create_time,
+           blog_thumb,
+           blog_view,
+           blog_reply,
+           blog_tag,
+           blog_category_name,
+           blog_cover,
+           blog_recommend,
+           blog_author_id,
+           blog_author_avatar,
+           blog_author_name,
+           blog_rank_index
+    from blog,
+         blog_category
+    where blog.blog_category_id = blog_category.blog_category_id
+    order by blog_rank_index DESC
+  </select>
+  <!--  自定义SQL-->
 </mapper>

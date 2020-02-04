@@ -1,5 +1,6 @@
 package com.tf.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tf.constant.CodeMessage;
@@ -27,9 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -47,8 +46,6 @@ public class BlogServiceImpl implements BlogService {
     private final BlogCommentMapper blogCommentMapper;
 
     private final RedisService redisService;
-
-    private static final int PAGE_SIZE = 3;
 
     @Autowired
     @SuppressWarnings("all")
@@ -104,7 +101,7 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public PageInfoDTO<BlogBriefListDTO> getPersonalBlogList(Integer userId, Integer pageIndex) {
-        PageHelper.startPage(pageIndex, PAGE_SIZE, true, true, null);
+        PageHelper.startPage(pageIndex, (int)Constant.PER_PAGE_NUM_TEN, true, true, null);
         List<BlogBriefListDTO> personalBlogList = blogMapper.getPersonalBlogList(userId);
         PageInfo<BlogBriefListDTO> pageInfo = new PageInfo<>(personalBlogList);
         PageInfoDTO<BlogBriefListDTO> pageInfoDTO = new PageInfoDTO<>();
@@ -172,11 +169,11 @@ public class BlogServiceImpl implements BlogService {
         SimplePageInfoDTO<BlogBriefListDTO> blogBriefListDTOSimplePageInfoDTO = null;
         // 首先从缓存中查询
         if (decideDays == Constant.ONE_DAY) {
-            blogBriefListDTOSimplePageInfoDTO = queryHotBlogFromCache(RedisKey.HOT_BLOG_LIST_ONE_DAY, pageIndex);
+            blogBriefListDTOSimplePageInfoDTO = queryBlogListFromCache(RedisKey.HOT_BLOG_LIST_ONE_DAY, pageIndex);
         } else if (decideDays == Constant.THREE_DAY) {
-            blogBriefListDTOSimplePageInfoDTO = queryHotBlogFromCache(RedisKey.HOT_BLOG_LIST_THREE_DAY, pageIndex);
+            blogBriefListDTOSimplePageInfoDTO = queryBlogListFromCache(RedisKey.HOT_BLOG_LIST_THREE_DAY, pageIndex);
         } else {
-            blogBriefListDTOSimplePageInfoDTO = queryHotBlogFromCache(RedisKey.HOT_BLOG_LIST_SEVEN_DAY, pageIndex);
+            blogBriefListDTOSimplePageInfoDTO = queryBlogListFromCache(RedisKey.HOT_BLOG_LIST_SEVEN_DAY, pageIndex);
         }
         if (blogBriefListDTOSimplePageInfoDTO != null) {
             return blogBriefListDTOSimplePageInfoDTO;
@@ -193,6 +190,7 @@ public class BlogServiceImpl implements BlogService {
 
     /**
      * 固定查询时间，使查询时间合理化
+     *
      * @param days 用户输入的
      * @return 合理化之后的天数
      */
@@ -208,20 +206,23 @@ public class BlogServiceImpl implements BlogService {
 
     /**
      * 从数据库中查询热榜
-     * @param redisKey redis键 主要涉及到哪一时间范围的值 查询后需要存入Redis
-     * @param days 时间范围
+     *
+     * @param redisKey  redis键 主要涉及到哪一时间范围的值 查询后需要存入Redis
+     * @param days      时间范围
      * @param pageIndex 分页
      * @return 分页列表
      */
     private SimplePageInfoDTO<BlogBriefListDTO> queryHotBlogFromDb(String redisKey, int days, int pageIndex) {
         List<BlogBriefListDTO> blogListInTimeRange = blogMapper.getBlogListInTimeRange(days);
-        blogListInTimeRange = blogListInTimeRange.stream().sorted(Comparator.comparingInt(blog -> blog.getBlogThumb() + blog.getBlogView() / 100))
+        blogListInTimeRange = blogListInTimeRange.stream()
+                // 设定比较规则 需要注意全局影响
+                .sorted(Comparator.comparingDouble(blog -> blog.getBlogThumb() + (blog.getBlogView() + 1) / 100.00))
                 .collect(Collectors.toList());
         // 存入 Redis 中 并设置10分钟超时时长
         blogListInTimeRange.forEach(item -> redisService.rpush(redisKey, item));
         redisService.expire(redisKey, 120, TimeUnit.SECONDS);
         if (blogListInTimeRange.size() <= (int) Constant.PER_PAGE_NUM_TEN * pageIndex
-        && blogListInTimeRange.size() >= (int) Constant.PER_PAGE_NUM_TEN * (pageIndex - 1)) {
+                && blogListInTimeRange.size() >= (int) Constant.PER_PAGE_NUM_TEN * (pageIndex - 1)) {
             return new SimplePageInfoDTO<>(false,
                     blogListInTimeRange.subList((int) Constant.PER_PAGE_NUM_TEN * (pageIndex - 1), blogListInTimeRange.size()));
         } else if (blogListInTimeRange.size() < (int) Constant.PER_PAGE_NUM_TEN * pageIndex) {
@@ -233,17 +234,18 @@ public class BlogServiceImpl implements BlogService {
     }
 
     /**
-     * 从缓存中查询热榜
-     * @param redisKey redis键 主要涉及到哪一时间范围的值
+     * 从缓存中查询指定博客列表
+     *
+     * @param redisKey  redis键 主要涉及到哪一时间范围的值
      * @param pageIndex 分页
      * @return 分页列表
      */
-    private SimplePageInfoDTO<BlogBriefListDTO> queryHotBlogFromCache(String redisKey,
-                                                                      int pageIndex) {
+    private SimplePageInfoDTO<BlogBriefListDTO> queryBlogListFromCache(String redisKey,
+                                                                       int pageIndex) {
         List<BlogBriefListDTO> cacheList = null;
         long length = redisService.llen(redisKey);
         if (Constant.PER_PAGE_NUM_TEN * pageIndex >= length
-        && length >= Constant.PER_PAGE_NUM_TEN * (pageIndex - 1)) {
+                && length >= Constant.PER_PAGE_NUM_TEN * (pageIndex - 1)) {
             cacheList = redisService.lrange(redisKey, Constant.PER_PAGE_NUM_TEN * (pageIndex - 1),
                     length - 1, BlogBriefListDTO.class);
             if (cacheList != null && cacheList.size() > 0) {
@@ -260,5 +262,47 @@ public class BlogServiceImpl implements BlogService {
             }
             return null;
         }
+    }
+
+    @Override
+    public SimplePageInfoDTO<BlogBriefListDTO> getRecommendBlogList(Integer pageIndex) throws GlobalException{
+        // 首先去缓存中查询 这个时候返回的是集合
+        Set<String> cacheList = null;
+        // 获取集合长度来判断分页
+        Long length = redisService.zlen(RedisKey.RECOMMEND_BLOG_LIST);
+        if (Constant.PER_PAGE_NUM_TEN * pageIndex >= length
+                && length >= Constant.PER_PAGE_NUM_TEN * (pageIndex - 1)) {
+            cacheList = redisService.zrevrange(RedisKey.RECOMMEND_BLOG_LIST, Constant.PER_PAGE_NUM_TEN * (pageIndex - 1),
+                    length - 1);
+            if (cacheList != null && cacheList.size() > 0) {
+                List<BlogBriefListDTO> list = cacheList.stream()
+                                .map(item -> JSON.parseObject(item, BlogBriefListDTO.class))
+                        .collect(Collectors.toList());
+                return new SimplePageInfoDTO<>(false, list);
+            }
+        } else if (Constant.PER_PAGE_NUM_TEN * pageIndex <= length){
+            cacheList = redisService.zrevrange(RedisKey.RECOMMEND_BLOG_LIST, Constant.PER_PAGE_NUM_TEN * (pageIndex - 1),
+                    Constant.PER_PAGE_NUM_TEN * pageIndex - 1);
+            if (cacheList != null && cacheList.size() > 0) {
+                List<BlogBriefListDTO> list = cacheList.stream()
+                        .map(item -> JSON.parseObject(item, BlogBriefListDTO.class))
+                        .collect(Collectors.toList());
+                return new SimplePageInfoDTO<>(true, list);
+            }
+        }
+        // 如果缓存中没有则去数据中查询
+        PageHelper.startPage(pageIndex, (int)Constant.PER_PAGE_NUM_TEN, true, true, null);
+        List<BlogBriefListDTO> recommendBlogList = blogMapper.getRecommendBlogList();
+        PageInfo<BlogBriefListDTO> pageInfo = new PageInfo<>(recommendBlogList);
+        List<BlogBriefListDTO> resultList = pageInfo.getList();
+        // 将查询结果放入缓存中
+        resultList.forEach(item -> redisService.zadd(
+                RedisKey.RECOMMEND_BLOG_LIST,
+                JSON.toJSONString(item),
+                item.getBlogRankIndex()));
+        SimplePageInfoDTO<BlogBriefListDTO> simplePageInfoDTO = new SimplePageInfoDTO<>();
+        simplePageInfoDTO.setList(resultList);
+        simplePageInfoDTO.setHasNextPage(pageInfo.isHasNextPage());
+        return simplePageInfoDTO;
     }
 }
