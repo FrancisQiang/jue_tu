@@ -305,4 +305,15 @@ public class BlogServiceImpl implements BlogService {
         simplePageInfoDTO.setHasNextPage(pageInfo.isHasNextPage());
         return simplePageInfoDTO;
     }
+
+    @Override
+    public SimplePageInfoDTO<BlogBriefListDTO> getLatestBlogList(Integer pageIndex) throws GlobalException {
+        // 首先从缓存中查询
+        SimplePageInfoDTO<BlogBriefListDTO> blogCacheList
+                = queryBlogListFromCache(RedisKey.LATEST_BLOG_LIST, pageIndex);
+        if (blogCacheList != null) {
+            return blogCacheList;
+        }
+        return queryHotBlogFromDb(RedisKey.LATEST_BLOG_LIST, Constant.SEVEN_DAY, pageIndex);
+    }
 }

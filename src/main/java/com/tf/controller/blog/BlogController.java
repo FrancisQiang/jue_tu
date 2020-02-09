@@ -103,4 +103,10 @@ public class BlogController {
         return blogService.getRecommendBlogList(pageIndex);
     }
 
+    @GetMapping(value = "/latest/{pageIndex}")
+    public SimplePageInfoDTO<BlogBriefListDTO> getLatestBlogList(@PathVariable(value = "pageIndex")
+                                                                            Integer pageIndex) throws GlobalException{
+        return blogService.getLatestBlogList(pageIndex);
+    }
+
 }

@@ -96,4 +96,12 @@ public interface BlogService {
      * @throws GlobalException 异常
      */
     SimplePageInfoDTO<BlogBriefListDTO> getRecommendBlogList(Integer pageIndex) throws GlobalException;
+
+    /**
+     * 获取最新文章列表
+     * @param pageIndex 分页
+     * @return 最新文章列表
+     * @throws GlobalException 异常
+     */
+    SimplePageInfoDTO<BlogBriefListDTO> getLatestBlogList(Integer pageIndex) throws GlobalException;
 }

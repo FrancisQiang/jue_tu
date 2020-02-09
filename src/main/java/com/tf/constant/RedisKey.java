@@ -26,4 +26,9 @@ public class RedisKey {
      */
     public static final String RECOMMEND_BLOG_LIST = "RECOMMEND_BLOG_LIST";
 
+    /**
+     * 最新博客列表
+     */
+    public static final String LATEST_BLOG_LIST = "Latest_BLOG_LIST";
+
 }
