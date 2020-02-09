@@ -104,4 +104,12 @@ public interface BlogService {
      * @throws GlobalException 异常
      */
     SimplePageInfoDTO<BlogBriefListDTO> getLatestBlogList(Integer pageIndex) throws GlobalException;
+
+    /**
+     * 给指定文章点赞 和 取消点赞
+     * @param userId 用户Id
+     * @param blogId 博客Id
+     * @throws GlobalException 异常
+     */
+    void thumbBlog(Integer userId, Integer blogId) throws GlobalException;
 }

@@ -34,6 +34,10 @@ public class CodeMessage {
     public static final CodeMessage TREE_HOLE_MESSAGE_ERROR = new CodeMessage(3001,"消息不存在或者已经被删除");
 
 
+    public static final CodeMessage ADD_THUMB_ERROR = new CodeMessage(4001,"点赞失败");
+    public static final CodeMessage DELETE_THUMB_ERROR = new CodeMessage(4002,"取消点赞失败");
+
+
     private Integer code;
     private String message;
 

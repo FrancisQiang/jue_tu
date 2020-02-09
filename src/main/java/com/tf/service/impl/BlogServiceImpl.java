@@ -9,6 +9,7 @@ import com.tf.constant.ExistStatus;
 import com.tf.constant.RedisKey;
 import com.tf.dao.BlogCommentMapper;
 import com.tf.dao.BlogMapper;
+import com.tf.dao.ThumbUserBlogMapper;
 import com.tf.dao.UserMapper;
 import com.tf.dto.blog.BlogBriefListDTO;
 import com.tf.dto.blog.BlogCommentListDTO;
@@ -47,14 +48,17 @@ public class BlogServiceImpl implements BlogService {
 
     private final RedisService redisService;
 
+    private final ThumbUserBlogMapper thumbUserBlogMapper;
+
     @Autowired
     @SuppressWarnings("all")
     public BlogServiceImpl(BlogMapper blogMapper, UserMapper userMapper, BlogCommentMapper blogCommentMapper,
-                           RedisService redisService) {
+                           RedisService redisService, ThumbUserBlogMapper thumbUserBlogMapper) {
         this.blogMapper = blogMapper;
         this.userMapper = userMapper;
         this.blogCommentMapper = blogCommentMapper;
         this.redisService = redisService;
+        this.thumbUserBlogMapper = thumbUserBlogMapper;
     }
 
     @Override
@@ -315,5 +319,28 @@ public class BlogServiceImpl implements BlogService {
             return blogCacheList;
         }
         return queryHotBlogFromDb(RedisKey.LATEST_BLOG_LIST, Constant.SEVEN_DAY, pageIndex);
+    }
+
+    @Override
+    public void thumbBlog(Integer userId, Integer blogId) throws GlobalException{
+        // 首先查看是否已经点过赞
+        ThumbUserBlogExample example = new ThumbUserBlogExample();
+        ThumbUserBlogExample.Criteria criteria = example.createCriteria();
+        criteria.andBlogIdEqualTo(blogId).andUserIdEqualTo(userId);
+        List<ThumbUserBlog> thumbUserBlogList = thumbUserBlogMapper.selectByExample(example);
+        if (thumbUserBlogList == null || thumbUserBlogList.size() == 0) {
+            // 进行点赞
+            ThumbUserBlog thumbUserBlog = new ThumbUserBlog();
+            thumbUserBlog.setBlogId(blogId);
+            thumbUserBlog.setUserId(userId);
+            if (thumbUserBlogMapper.insertSelective(thumbUserBlog) == 0) {
+                throw new GlobalException(CodeMessage.ADD_THUMB_ERROR);
+            }
+        } else {
+            // 取消点赞
+            if (thumbUserBlogMapper.deleteByPrimaryKey(thumbUserBlogList.get(0).getThumbUserBlogId()) == 0) {
+                throw new GlobalException(CodeMessage.DELETE_THUMB_ERROR);
+            }
+        }
     }
 }

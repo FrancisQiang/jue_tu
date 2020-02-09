@@ -109,4 +109,9 @@ public class BlogController {
         return blogService.getLatestBlogList(pageIndex);
     }
 
+    @PostMapping(value = "/thumb/{blogId}")
+    public void thumbBlog(@PathVariable(value = "blogId")Integer blogId) throws GlobalException{
+        blogService.thumbBlog(Integer.valueOf(jwtUtil.getUserId()), blogId);
+    }
+
 }
