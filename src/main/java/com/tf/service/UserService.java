@@ -8,6 +8,8 @@ import com.tf.vo.LoginVO;
 import com.tf.vo.ModifyUserInfoVO;
 import com.tf.vo.RegisterVO;
 
+import java.util.List;
+
 public interface UserService {
     /**
      * description: 登录
@@ -51,5 +53,12 @@ public interface UserService {
      * @time: 2020.02.03
      */
     boolean changePassword(ChangePasswordVO changePasswordVO,Integer userId) throws GlobalException;
+
+    /**
+     * description: 根据用户点赞数、用户博客访问量、掘力值生成用户排行榜
+     * @author: Wei Yuyang
+     * @time: 2020.02.11
+     */
+    List<UserInfoDTO> getUserRank();
 
 }

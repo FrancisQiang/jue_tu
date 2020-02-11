@@ -2,6 +2,7 @@ package com.tf.service.impl;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.tf.constant.CodeMessage;
+import com.tf.constant.RedisKey;
 import com.tf.dao.UserMapper;
 import com.tf.dto.CaptchaDTO;
 import com.tf.dto.UserInfoDTO;
@@ -26,9 +27,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -165,5 +164,36 @@ public class UserServiceImpl implements UserService {
         }else {
             throw new GlobalException(CodeMessage.ENTER_OLD_PASSWORD_ERROR);
         }
+    }
+
+    @Override
+    public List<UserInfoDTO> getUserRank() {
+        //第一次访问初始化redis列表
+        Long size = redisService.zlen(RedisKey.USER_BLOG_SUBSCRIBE_LIST);
+        if(size == 0){
+            initialUserRankList();
+        }
+        //从redis中获取实时的点赞数和浏览量
+        Set<String> userIdSet = redisService.zrange(RedisKey.USER_BLOG_SUBSCRIBE_LIST, 0, 99);
+        List<Integer> userIdList = new ArrayList<>();
+        for (String id:
+             userIdSet) {
+            userIdList.add(Integer.valueOf(id));
+        }
+        //处理返回数据
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andUserIdIn(userIdList);
+        List<User> users = userMapper.selectByExample(userExample);
+        List<UserInfoDTO> userInfos = new ArrayList<>();
+        for (User user:
+             users) {
+            UserInfoDTO map = dozerBeanMapper.map(user, UserInfoDTO.class);
+            userInfos.add(map);
+        }
+        return userInfos;
+    }
+
+    private void initialUserRankList(){
+        //TODO 初始化点赞数列表
     }
 }

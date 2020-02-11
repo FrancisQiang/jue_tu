@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author Wei yuyaung
@@ -87,6 +88,19 @@ public class UserController {
         }else {
             throw new GlobalException(CodeMessage.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    /**
+     * description: 用户排行榜
+     * @return:
+     * @author: Wei Yuyang
+     * @time: 2020.02.11
+     */
+    @GetMapping("/user/rank")
+    public List<UserInfoDTO> userRank(){
+        List<UserInfoDTO> userRank = userService.getUserRank();
+        //TODO 返回信息尚未完善
+        return userRank;
     }
 
 }

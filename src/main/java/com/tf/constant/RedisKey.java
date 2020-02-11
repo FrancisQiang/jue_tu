@@ -31,4 +31,11 @@ public class RedisKey {
      */
     public static final String LATEST_BLOG_LIST = "Latest_BLOG_LIST";
 
+
+    /**
+     * 最新博客列表
+     */
+    public static final String USER_BLOG_SUBSCRIBE_LIST = "USER_BLOG_SUBSCRIBE_LIST";
+
+
 }
