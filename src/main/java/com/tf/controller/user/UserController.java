@@ -37,7 +37,7 @@ public class UserController {
      * @time: 2020.01.28
      */
     @GetMapping("/userInfo")
-    @RequiresPermissions("user:info")
+    @RequiresPermissions("user:base")
     public UserInfoDTO userInfo() throws GlobalException {
         return userService.userInfo(Integer.valueOf(jwtUtil.getUserId()));
     }
@@ -60,7 +60,7 @@ public class UserController {
      * @time: 2020.02.01
      */
     @PatchMapping("/user/info")
-    @RequiresPermissions("user:info")
+    @RequiresPermissions("user:base")
     public String modifyUserOwnInfo(@RequestBody ModifyUserInfoVO modifyUserInfoVO) throws GlobalException {
         modifyUserInfoVO.setUserId(Integer.valueOf(jwtUtil.getUserId()));
         boolean success = userService.modifyUserInfo(modifyUserInfoVO);
