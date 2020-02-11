@@ -13,6 +13,7 @@ public class TreeHole {
     @Mapping("time")
     private Date treeHoleCreateTime;
 
+    @Mapping("content")
     private String treeHoleContent;
 
     public Integer getTreeHoleId() {

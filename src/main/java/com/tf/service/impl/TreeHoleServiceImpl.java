@@ -50,7 +50,7 @@ public class TreeHoleServiceImpl implements TreeHoleService {
         PageHelper.startPage(pageIndex, PAGE_SIZE, true, true, null);
         TreeHoleExample treeHoleExample = new TreeHoleExample();
         treeHoleExample.createCriteria().andTreeHoleCreateTimeLessThanOrEqualTo(new Date());
-        List<TreeHole> treeHolesList = treeHoleMapper.selectByExample(treeHoleExample);
+        List<TreeHole> treeHolesList = treeHoleMapper.selectByExampleWithBLOBs(treeHoleExample);
         List<TreeHoleListInfoDTO> infoList = new ArrayList<>();
         for (TreeHole treeHole:
              treeHolesList) {

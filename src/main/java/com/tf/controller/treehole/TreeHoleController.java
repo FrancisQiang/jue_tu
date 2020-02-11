@@ -12,6 +12,7 @@ import com.tf.service.TreeHoleService;
 import com.tf.utils.ValidateUtil;
 import com.tf.vo.TreeHoleCommentVO;
 import com.tf.vo.TreeHoleContentVO;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -66,6 +67,7 @@ public class TreeHoleController {
      * @time: 2020.02.03
      */
     @GetMapping("/comment/{treeholeId}")
+    @RequiresPermissions("user:base")
     public List<TreeHoleCommentDTO> comments(@PathVariable Integer treeholeId){
         List<TreeHoleCommentDTO> treeHoleCommentDTOS = treeHoleService.commentInfo(treeholeId);
         if(treeHoleCommentDTOS == null){
@@ -82,6 +84,7 @@ public class TreeHoleController {
      * @time: 2020.02.03
      */
     @PostMapping("")
+    @RequiresPermissions("user:base")
     public String publishTreeHole(@RequestBody @Valid TreeHoleContentVO treeHoleContentVO, BindingResult results) throws GlobalException {
         ValidateUtil.paramValidate(results);
         boolean success = treeHoleService.addNewTreeHole(Integer.valueOf(jwtUtil.getUserId()), treeHoleContentVO.getContent());
@@ -98,7 +101,8 @@ public class TreeHoleController {
      * @author: Wei Yuyang
      * @time: 2020.02.03
      */
-    @PostMapping("/comment")
+    @PostMapping("/comments")
+    @RequiresPermissions("user:base")
     public String addComment(@RequestBody @Valid TreeHoleCommentVO treeHoleCommentVO,BindingResult results) throws GlobalException {
         ValidateUtil.paramValidate(results);
         boolean success = treeHoleService.addNewTreeHoleComment(treeHoleCommentVO, Integer.valueOf(jwtUtil.getUserId()));

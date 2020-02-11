@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TreeHoleListInfoDTO {
-    private String treeholeId;
+    private String id;
     private String content;
-    private Date createTime;
+    private Date time;
 }
